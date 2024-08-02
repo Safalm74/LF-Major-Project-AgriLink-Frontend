@@ -49,14 +49,14 @@ Make sure you have Node.js and npm installed on your machine.
 1. Clone the repository:
 
    ```bash
-   git clone 
+   git clone https://github.com/Safalm74/LF-Major-Project-AgriLink-Frontend.git
 
    ```
 
 2. Navigate to the project directory:
 
     ```bash
-    cd 
+    cd LF-Major-Project-AgriLink-Frontend
     ```
 
 3.  Install dependencies:
