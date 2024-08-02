@@ -320,6 +320,8 @@ table {
   table th {
     background-color: grey;
     color: white; }
+  table tr:hover {
+    transform: scale(1.01); }
 
 .about {
   padding: 5rem; }

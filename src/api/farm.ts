@@ -1,25 +1,17 @@
-import axios from "axios";
 import { backendServerURL } from "../constants";
 import { IFarm } from "../interface/farm";
 import toast from "../components/toast";
+import api from "./axiosApi";
 
 const endPoint = backendServerURL + "/farm";
 
 export async function createFarm(farmToCreate: Omit<IFarm, "id">) {
-  return axios
-    .post(
-      endPoint,
-      {
-        userId: farmToCreate.userId,
-        farmName: farmToCreate.farmName,
-        farmAddress: farmToCreate.farmAddress,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      }
-    )
+  return api
+    .post(endPoint, {
+      userId: farmToCreate.userId,
+      farmName: farmToCreate.farmName,
+      farmAddress: farmToCreate.farmAddress,
+    })
     .then((res) => {
       toast("Farm created successfully", "success");
       return res.data;
@@ -27,59 +19,33 @@ export async function createFarm(farmToCreate: Omit<IFarm, "id">) {
 }
 
 export function getFarmDetailsById(farmId: string) {
-  return axios
-    .get(endPoint + `/${farmId}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    })
-    .then((res) => {
-      const farm: IFarm = res.data[0];
+  return api.get(endPoint + `/?farmId=${farmId}`).then((res) => {
+    const farm: IFarm = res.data[0];
 
-      return farm;
-    });
+    return farm;
+  });
 }
 
 export function getAllFarms() {
-  return axios
-    .get(endPoint, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    })
-    .then((res) => {
-      const farms: IFarm[] = res.data;
+  return api.get(endPoint).then((res) => {
+    const farms: IFarm[] = res.data;
 
-      return farms;
-    });
+    return farms;
+  });
 }
 
 export function getAllFarmsByUserId() {
-  return axios
-    .get(endPoint + "/userFarms", {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    })
-    .then((res) => {
-      const farms: IFarm[] = res.data;
+  return api.get(endPoint + "/userFarms").then((res) => {
+    const farms: IFarm[] = res.data;
 
-      return farms;
-    });
+    return farms;
+  });
 }
 
 export async function updateFarm(farmId: string, farmToUpdate: IFarm) {
-  return await axios.put(endPoint + `/${farmId}`, farmToUpdate, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-    },
-  });
+  return await api.put(endPoint + `/${farmId}`, farmToUpdate);
 }
 
 export async function deleteFarm(farmId: string) {
-  return await axios.delete(endPoint + `/${farmId}`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-    },
-  });
+  return await api.delete(endPoint + `/${farmId}`);
 }

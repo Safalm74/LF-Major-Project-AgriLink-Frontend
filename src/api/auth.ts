@@ -1,7 +1,5 @@
 import axios from "axios";
 import { backendServerURL } from "../constants";
-import toast from "../components/toast";
-import { logOut } from "../utils/logOut";
 
 const endPoint = backendServerURL + "/auth";
 
@@ -21,22 +19,16 @@ export async function login(email: string, password: string) {
 }
 
 export async function refreshAccessToken() {
-  try {
-    const accessToken = (
-      await axios.get(endPoint + "/refreshAccessToken", {
-        withCredentials: true,
-      })
-    ).data;
+  const accessToken = (
+    await axios.get(endPoint + "/refreshAccessToken", {
+      withCredentials: true,
+    })
+  ).data;
 
-    console.log("here", accessToken);
+  localStorage.removeItem("accessToken");
+  localStorage.setItem("accessToken", accessToken.accessToken);
 
-    localStorage.removeItem("accessToken");
-    localStorage.setItem("accessToken", accessToken);
+  console.log(accessToken.accessToken);
 
-    return accessToken;
-  } catch (error) {
-    logOut();
-
-    toast("Please login again", "error");
-  }
+  return accessToken;
 }

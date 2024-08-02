@@ -4,8 +4,8 @@ import { refreshNav } from "./nav";
 import { IUserToken } from "../interface/auth";
 import toast from "./toast";
 import { login } from "../api/auth";
-import { Axios, AxiosError } from "axios";
-import { errorHandler } from "../api/errorHandler";
+import { AxiosError } from "axios";
+import { errorHandler } from "../utils/errorHandler";
 
 async function handleFormSubmit(event: Event) {
   event.preventDefault();
@@ -25,7 +25,7 @@ async function handleFormSubmit(event: Event) {
       localStorage.setItem("farm", JSON.stringify(response.farm));
     }
 
-    toast("Log in Sucessfull", "sucess");
+    toast("Log in successful", "success");
 
     refreshNav();
   } catch (error) {
@@ -51,14 +51,14 @@ export default function logInForm() {
   email.placeholder = "Example@example.com";
   email.id = "email";
   email.name = "email";
-  email.value = "admin@admin.com";
+  email.value = "farmer@farmer.com";
 
   const password = document.createElement("input");
   password.type = "password";
   password.placeholder = "Password";
   password.id = "password";
   password.name = "password";
-  password.value = "admin";
+  password.value = "farmer";
 
   const logInBtn = document.createElement("button");
   logInBtn.type = "submit";

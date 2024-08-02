@@ -1,8 +1,7 @@
-import axios from "axios";
 import { backendServerURL } from "../constants";
 import { IFarm } from "../interface/farm";
-import { Iuser } from "../interface/user";
-import { errorHandler } from "./errorHandler";
+import { IUser } from "../interface/user";
+import api from "./axiosApi";
 
 const endPoint = backendServerURL + "/user";
 
@@ -16,7 +15,7 @@ export async function createUser(
 ) {
   const defaultRole = "customer";
   return (
-    await axios.post(endPoint, {
+    await api.post(endPoint, {
       firstName: firstName,
       lastName: lastName,
       email: email,
@@ -29,31 +28,15 @@ export async function createUser(
 }
 
 export async function getAllUser() {
-  return axios
-    .get(endPoint, {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("accessToken"),
-      },
-    })
-    .then((res) => {
-      const data: Iuser[] = res.data;
+  return api.get(endPoint).then((res) => {
+    const data: IUser[] = res.data;
 
-      return data;
-    })
-    .catch((e) => {
-      errorHandler(e.response);
-      return getAllUser();
-    });
+    return data;
+  });
 }
 
 export async function getUserById(userId: string) {
-  return axios
-    .get(endPoint + "?id=" + userId, {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("refreshToken"),
-      },
-    })
-    .then((res) => res.data);
+  return api.get(endPoint + "?id=" + userId).then((res) => res.data);
 }
 
 export async function updateUser(
@@ -65,36 +48,20 @@ export async function updateUser(
   phone: string,
   address: string
 ) {
-  await axios.put(
-    endPoint + "/" + userId,
-    {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password,
-      phone: phone,
-      address: address,
-    },
-    {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("accessToken"),
-      },
-    }
-  );
+  await api.put(endPoint + "/" + userId, {
+    firstName: firstName,
+    lastName: lastName,
+    email: email,
+    password: password,
+    phone: phone,
+    address: address,
+  });
 }
 
 export async function changeToFarmer(farmToCreate: Omit<IFarm, "id">) {
-  return await axios.patch(endPoint + "/roleToFarmer", farmToCreate, {
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("refreshToken"),
-    },
-  });
+  return await api.patch(endPoint + "/roleToFarmer", farmToCreate);
 }
 
 export async function deleteUser(userId: string) {
-  return await axios.delete(endPoint + "/" + userId, {
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("refreshToken"),
-    },
-  });
+  return await api.delete(endPoint + "/" + userId);
 }

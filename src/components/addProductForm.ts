@@ -5,6 +5,8 @@ import { IProduct } from "../interface/product";
 import Inventory from "../pages/inventory";
 import { createProduct } from "../api/products";
 import { uploadImage } from "../api/minio";
+import { errorHandler } from "../utils/errorHandler";
+import { AxiosError } from "axios";
 
 export default class AddProductForm {
   static async init() {
@@ -62,7 +64,7 @@ export default class AddProductForm {
         await createProduct(productToUpload);
       }
     } catch (error) {
-      console.log(error);
+      errorHandler((error as AxiosError).response!);
     }
   }
 

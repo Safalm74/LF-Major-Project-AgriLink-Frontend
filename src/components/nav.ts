@@ -4,7 +4,6 @@ import Modal from "../sections/modal";
 import logInForm from "./logInForm";
 import getInitials from "../utils/getInitials";
 import Router from "../routes";
-import { AdminPortal } from "../pages/adminPortal";
 import { userManagement } from "../pages/UserManagement";
 import { FarmManagement } from "../pages/farmManagement";
 import { ProductManagement } from "../pages/ProductManagement";
@@ -52,9 +51,10 @@ export function nav(): HTMLElement {
       btnName: "About",
       btnClass: "btn",
       btnFunction: async () => {
-        // About.load();
-        // window.history.pushState(null, "", "/about");
-        await Router.resolve("/about");
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth",
+        });
       },
     },
     {

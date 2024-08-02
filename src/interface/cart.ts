@@ -1,4 +1,4 @@
-export interface Icart {
+export interface ICart {
   id: string;
   productId: string;
   quantity: number;
@@ -7,10 +7,10 @@ export interface Icart {
 export interface ICartToCheckout {
   customerId: string;
   farmId: string;
-  orderItems: IorderItem[];
+  orderItems: IOrderItem[];
 }
 
-interface IorderItem {
+interface IOrderItem {
   productId: string;
   quantity: number;
   unitPrice: number;

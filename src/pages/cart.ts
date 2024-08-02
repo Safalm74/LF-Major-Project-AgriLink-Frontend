@@ -1,26 +1,21 @@
-import { Icart, ICartToCheckout } from "../interface/cart";
+import { ICart, ICartToCheckout } from "../interface/cart";
 import { Content } from "../sections/content";
 import fetchHtml from "../utils/fetchHtml";
 import { getProductDetail } from "../api/products";
-import { IProduct } from "../interface/product";
 import { deleteCart, getCartData, updateCart } from "../api/cart";
 import { createOrder } from "../api/orders";
 
-interface IchangeHistory {
-  id: string;
-  price: number;
-  quantity: number;
-}
-
-interface ICartWithFarm extends Icart {
-  farmId: string;
+interface ICartWithFarm extends ICart {
+  farmId?: string;
+  price?: number;
+  productImage?: string;
+  productName?: string;
+  productMaxQuantity?: number;
 }
 
 export default class Cart {
-  static tempCartChange: Icart[] = [];
-  static changeHistory: Icart[] = [];
-  static totalAmount = 0;
-  static cartData: ICartWithFarm[] = [];
+  static cartItems: ICartWithFarm[] = [];
+  static tempChangeInCartItems: ICartWithFarm[] = [];
 
   static async init() {
     const cart = document.createElement("div");
@@ -33,11 +28,36 @@ export default class Cart {
   static async load() {
     Content.replaceContent(await this.init());
 
-    this.loadContent();
+    await this.getCartItems();
+
+    //this.loadContent();
+
+    this.loadTotalAmount();
+
+    this.loadTableContent();
 
     this.btnListener();
   }
 
+  static async getCartItems() {
+    this.tempChangeInCartItems = [];
+    this.cartItems = await getCartData();
+
+    await Promise.all(
+      this.cartItems.map(async (data) => {
+        const product = await getProductDetail(data.productId);
+        data.price = product.price;
+        data.farmId = product.farmId;
+        data.productImage = product.imageUrl;
+        data.productName = product.name;
+        data.productMaxQuantity = product.quantity;
+
+        return data;
+      })
+    );
+
+    return this.cartItems;
+  }
   static async btnListener() {
     const cart = document.getElementsByClassName("cart")[0];
     const checkoutBtn = cart.getElementsByClassName(
@@ -48,8 +68,10 @@ export default class Cart {
     )[0] as HTMLButtonElement;
 
     updateBtn.addEventListener("click", () => {
-      this.tempCartChange.forEach(async (data) => {
+      this.tempChangeInCartItems.forEach(async (data) => {
         await updateCart(data.id, data.quantity);
+
+        this.load();
       });
     });
 
@@ -58,7 +80,7 @@ export default class Cart {
     });
   }
 
-  static async loadContent() {
+  static async loadTableContent() {
     const cart = document.getElementsByClassName("cart")[0];
     const cartTable = cart.getElementsByClassName("cart-table")[0];
 
@@ -71,36 +93,40 @@ export default class Cart {
       "Total",
     ]);
 
-    const cartData = await getCartData();
-
-    this.totalAmount = (
-      await Promise.all(
-        cartData!.map(async (data) => {
-          const trAndSubTotal = await this.loadTable(data);
-          cartTable.appendChild(trAndSubTotal.tr);
-
-          return trAndSubTotal.subTotal;
-        })
-      )
-    ).reduce((a, c) => {
-      return a + c;
+    this.cartItems.forEach((data) => {
+      const tempChangeInCartItem = this.tempChangeInCartItems.find(
+        (tempCartItem) => tempCartItem.id === data.id
+      );
+      cartTable.appendChild(this.loadTable(tempChangeInCartItem || data));
     });
-    this.loadTotalAmount();
   }
 
   static async loadTotalAmount() {
     const cart = document.getElementsByClassName("cart")[0];
     const totalTable = cart.getElementsByClassName("total-table")[0];
-    totalTable.innerHTML = this.tableHeadings([
-      "Grand Total",
-      `Rs. ${this.totalAmount}`,
-    ]);
+
+    let total = 0;
+    this.cartItems.forEach((data) => {
+      //checking if there is a change in cart items
+      const tempChangeInCartItem = this.tempChangeInCartItems.find(
+        (tempCartItem) => tempCartItem.id === data.id
+      );
+
+      //if there is a change in cart items, adding total by the total change
+      if (tempChangeInCartItem) {
+        total += tempChangeInCartItem.quantity * +tempChangeInCartItem.price!;
+      } else {
+        total += data.quantity * +data.price!;
+      }
+
+      return total;
+    });
+
+    totalTable.innerHTML = this.tableHeadings(["Grand Total", `Rs. ${total}`]);
   }
 
-  static async loadTable(data: Icart) {
+  static loadTable(data: ICartWithFarm) {
     const tr = document.createElement("tr");
-
-    const productDetail: IProduct = await getProductDetail(data.productId);
     const product = document.createElement("td");
     const quantity = document.createElement("input");
     const price = document.createElement("td");
@@ -111,9 +137,9 @@ export default class Cart {
     const removeFromCartBtn = document.createElement("button");
     const productImageContainer = document.createElement("figure");
     const productImage = document.createElement("img");
-    const subTotal = productDetail!.price * data.quantity;
+    const subTotal = data.price! * data.quantity;
 
-    productImage.src = productDetail!.imageUrl;
+    productImage.src = data.productImage!;
     productImage.classList.add("cart__image");
 
     productImageContainer.classList.add("cart__image-container");
@@ -123,7 +149,8 @@ export default class Cart {
     removeFromCartBtn.innerHTML = `<i class="fa-solid fa-trash"></i>`;
     removeFromCartBtn.addEventListener("click", async () => {
       await deleteCart(data.id);
-      Cart.load();
+
+      this.load();
     });
 
     removeFromCartTD.appendChild(removeFromCartBtn);
@@ -131,41 +158,16 @@ export default class Cart {
     quantity.type = "number";
     quantity.value = data.quantity.toString();
     quantity.min = "0";
-    quantity.max = productDetail!.quantity.toString();
-    quantity.addEventListener("change", async () => {
-      const dataBeforeChanged = this.changeHistory.find(
-        (change) => change.id === data.id
-      );
-
-      const existingCartDataInChange = this.tempCartChange.find(
-        (change) => change.id === data.id
-      );
-
-      if (existingCartDataInChange) {
-        existingCartDataInChange.quantity = +quantity.value;
-      } else {
-        this.tempCartChange.push({
-          id: data.id,
-          quantity: +quantity.value,
-          productId: data.productId,
-        });
-      }
-
-      if (!dataBeforeChanged) {
-        return;
-      }
-
-      this.totalAmount +=
-        (+quantity.value - dataBeforeChanged.quantity) * productDetail!.price;
-
-      dataBeforeChanged.quantity = +quantity.value;
-
-      this.loadTotalAmount();
+    quantity.max = data.productMaxQuantity!.toString();
+    quantity.addEventListener("change", () => {
+      this.quantityChangeEventListener(data, quantity);
+      this.loadTableContent();
     });
+
     quantityTd.appendChild(quantity);
 
-    product.innerHTML = productDetail!.productName;
-    price.innerHTML = `Rs. ${productDetail!.price}`;
+    product.innerHTML = data.productName!;
+    price.innerHTML = `Rs. ${data.price}`;
     total.innerHTML = `Rs. ${subTotal}`;
 
     tr.appendChild(removeFromCartTD);
@@ -175,15 +177,23 @@ export default class Cart {
     tr.appendChild(price);
     tr.appendChild(total);
 
-    this.changeHistory.push({
-      id: data.id,
-      quantity: +quantity.value,
-      productId: data.productId,
-    });
+    return tr;
+  }
+  static async quantityChangeEventListener(
+    data: ICart,
+    quantity: HTMLInputElement
+  ) {
+    //checking if there was already change in cart item
+    const existingCartInTempChange = this.tempChangeInCartItems.find(
+      (tempCartItem) => tempCartItem.id === data.id
+    );
 
-    this.cartData.push({ farmId: productDetail!.farmId, ...data });
-
-    return { tr, subTotal };
+    if (existingCartInTempChange) {
+      //if cart item exists, updating quantity else adding cart item to temp change
+      existingCartInTempChange.quantity = +quantity.value;
+    } else {
+      this.tempChangeInCartItems.push(data);
+    }
   }
 
   static tableHeadings(tableHeadings: string[]) {
@@ -200,15 +210,13 @@ export default class Cart {
 
   static async checkout() {
     const allCartDataToCheckout: ICartToCheckout[] = [];
+    const cartDataByFarm = this.groupItemsByFarm();
 
-    const cartDataByFram = this.groupItemsByFarm();
-    console.log(cartDataByFram);
-
-    cartDataByFram.forEach(async (cartItems) => {
+    cartDataByFarm.forEach(async (cartItems) => {
       cartItems.forEach(async (data) => {
-        const dataToCheckout = {
+        const dataToCheckout: ICartToCheckout = {
           customerId: JSON.parse(localStorage.getItem("userDetails")!).id,
-          farmId: data.farmId,
+          farmId: data.farmId!,
           orderItems: [
             {
               productId: data.productId,
@@ -222,18 +230,23 @@ export default class Cart {
       });
 
       allCartDataToCheckout.forEach(async (data) => {
-        createOrder(data);
+        await createOrder(data);
+        this.cartItems = [];
       });
     });
   }
+
   static groupItemsByFarm() {
     const farms: Record<string, ICartWithFarm[]> = {};
 
-    this.cartData.forEach((item) => {
-      if (!farms[item.farmId]) {
-        farms[item.farmId] = [];
+    this.cartItems.forEach((item) => {
+      if (item.farmId) {
+        if (!farms[item.farmId!]) {
+          farms[item.farmId!] = [];
+        }
+
+        farms[item.farmId!].push(item);
       }
-      farms[item.farmId].push(item);
     });
 
     return Object.values(farms);

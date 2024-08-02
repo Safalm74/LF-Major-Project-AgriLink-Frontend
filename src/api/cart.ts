@@ -1,60 +1,30 @@
-import axios from "axios";
 import { backendServerURL } from "../constants";
-import { Icart } from "../interface/cart";
-import { errorHandler } from "./errorHandler";
+import { ICart } from "../interface/cart";
+import api from "./axiosApi";
 
 const endPoint = backendServerURL + `/cartItems`;
 
 export async function addToCart(id: string, quantity: number) {
-  return await axios.post(
-    endPoint,
-    {
-      productId: id,
-      quantity: quantity,
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    }
-  );
+  return await api.post(endPoint, {
+    productId: id,
+    quantity: quantity,
+  });
 }
 
 export async function getCartData() {
-  return axios
-    .get(endPoint, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    })
-    .then((res) => {
-      const cart: Icart[] = res.data;
-      return cart;
-    })
-    .catch((err) => {
-      errorHandler(err.response);
-    });
+  return api.get(endPoint).then((res) => {
+    const cart: ICart[] = res.data;
+    return cart;
+  });
 }
 
 export async function updateCart(id: string, quantity: number) {
-  return await axios.put(
-    endPoint + `/${id}`,
-    {
-      id: id,
-      quantity: quantity,
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    }
-  );
+  return await api.put(endPoint + `/${id}`, {
+    id: id,
+    quantity: quantity,
+  });
 }
 
 export async function deleteCart(id: string) {
-  return await axios.delete(endPoint + `/${id}`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-    },
-  });
+  return await api.delete(endPoint + `/${id}`);
 }

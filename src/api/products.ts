@@ -1,15 +1,11 @@
-import axios from "axios";
 import { IProduct } from "../interface/product";
 import { backendServerURL } from "../constants";
+import api from "./axiosApi";
 
 const endPoint = backendServerURL + `/product`;
 
 export async function createProduct(productToUpload: Omit<IProduct, "id">) {
-  await axios.post(endPoint, productToUpload, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("refreshToken")}`,
-    },
-  });
+  await api.post(endPoint, productToUpload);
 }
 
 export async function getProductDetail(productId: string) {
@@ -29,13 +25,7 @@ export async function getProductDetail(productId: string) {
 }
 
 function getProductById(productId: string) {
-  return axios
-    .get(endPoint + `?id=${productId}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("refreshToken")}`,
-      },
-    })
-    .then((res) => res.data);
+  return api.get(endPoint + `?id=${productId}`).then((res) => res.data);
 }
 
 export async function getProductByFarmId(farmId?: string) {
@@ -43,8 +33,7 @@ export async function getProductByFarmId(farmId?: string) {
     return;
   }
 
-  const data: IProduct[] = (await axios.get(endPoint + `?farmId=${farmId}`))
-    .data;
+  const data: IProduct[] = (await api.get(endPoint + `?farmId=${farmId}`)).data;
 
   sessionStorage.setItem("products", JSON.stringify(data));
 
@@ -58,7 +47,7 @@ export async function getAllProducts(searchKey?: string) {
     getProductEndPoint += `?searchKeyword=${searchKey}`;
   }
 
-  const data: IProduct[] = (await axios.get(getProductEndPoint)).data;
+  const data: IProduct[] = (await api.get(getProductEndPoint)).data;
 
   return data;
 }
@@ -67,17 +56,9 @@ export async function updateProduct(
   productId: string,
   productToUpload: Omit<IProduct, "id" | "farmId">
 ) {
-  await axios.put(endPoint + `/${productId}`, productToUpload, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("refreshToken")}`,
-    },
-  });
+  await api.put(endPoint + `/${productId}`, productToUpload);
 }
 
 export async function deleteProduct(productId: string) {
-  return await axios.delete(endPoint + `/${productId}`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("refreshToken")}`,
-    },
-  });
+  return await api.delete(endPoint + `/${productId}`);
 }

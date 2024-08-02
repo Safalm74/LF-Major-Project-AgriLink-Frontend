@@ -1,7 +1,6 @@
 import { deleteProduct, getAllProducts } from "../api/products";
 import { IProduct } from "../interface/product";
 import { Content } from "../sections/content";
-import ProductDetails from "./productDetails";
 
 export class ProductManagement {
   static async init() {

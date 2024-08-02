@@ -1,6 +1,6 @@
 import toast from "./toast";
 import { createUser, getUserById, updateUser } from "../api/users";
-import { errorHandler } from "../api/errorHandler";
+import { errorHandler } from "../utils/errorHandler";
 import { AxiosError } from "axios";
 import Modal from "../sections/modal";
 

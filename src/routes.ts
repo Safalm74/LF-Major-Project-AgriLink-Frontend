@@ -1,5 +1,4 @@
 import Home from "./pages/home";
-import { About } from "./pages/about";
 import Inventory from "./pages/inventory";
 import Cart from "./pages/cart";
 import { Account } from "./pages/account";
@@ -11,13 +10,6 @@ const routes: IRoute[] = [
     path: "/home",
     action: async () => {
       await Home.load();
-      return;
-    },
-  },
-  {
-    path: "/about",
-    action: async () => {
-      await About.load();
       return;
     },
   },

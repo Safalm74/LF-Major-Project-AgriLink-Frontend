@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import { errorHandler } from "../api/errorHandler";
+import { errorHandler } from "../utils/errorHandler";
 import { createFarm, getAllFarmsByUserId, updateFarm } from "../api/farm";
 import Modal from "../sections/modal";
 import fetchHtml from "../utils/fetchHtml";
