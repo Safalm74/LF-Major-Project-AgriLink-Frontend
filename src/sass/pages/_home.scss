@@ -1,0 +1,23 @@
+.home{
+    width: 100%;
+
+    .products{
+        min-height: 80vh;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        flex-wrap: wrap;      
+    }
+  
+    .our-products{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom:5rem;    
+        font-size: large;
+        span{
+            color:#fca311;
+        }
+    }
+}

@@ -1,0 +1,81 @@
+.header {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 3.2rem;
+    
+}
+
+.carousel-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    line-height: 3rem;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+    p {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #fca311;
+    }
+
+    h1 {
+        font-size: 4rem;
+        color: whitesmoke;
+    }
+}
+
+.carousel-slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    animation: slide 12s infinite;
+    z-index: -1;
+    margin: 0;
+}
+
+.slide1 {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+    url('../../../public/images/background/pexels-adonyi-foto-1414651.jpg');
+    animation-delay: 0s;
+}
+
+.slide2 {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+     url('../../../public/images/background/pexels-angele-j-35172-128402.jpg');
+    animation-delay: 4s;
+}
+
+.slide3 {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../../public/images/background/pexels-mike-468229-1192031.jpg');
+    animation-delay: 8s;
+}
+
+@keyframes slide {
+    0% {
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    33% {
+        opacity: 1;
+    }
+
+    53% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}

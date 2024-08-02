@@ -1,0 +1,29 @@
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    input{
+        width: 40rem;
+        height: 3rem;
+        margin-bottom: 1rem;
+        padding: 0.5rem 1rem; 
+    }
+
+    .btns{
+        margin-top: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: center;
+        gap: 1rem;
+        width: 100%;
+    }
+
+    button{
+
+        height: 3rem;
+    }
+}

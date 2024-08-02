@@ -1,0 +1,25 @@
+*,
+*::after,
+*::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: inherit;
+  // outline: 1px solid blue;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+.body-theme-day {
+  background-color: var(--body-background-color);
+}
+
+.body-theme-night {
+  background-image: linear-gradient(172.33deg, #30303A -1.75%, #20202E 83.53%, #050519 104.9%);
+}
+
+ul,
+li {
+  list-style-type: none;
+}

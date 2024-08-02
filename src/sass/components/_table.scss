@@ -1,0 +1,20 @@
+table{
+    flex: 1;
+    border: 1px solid black;
+    width: 100%;
+    border-collapse: collapse;
+
+    th, td{
+        width: 10rem;
+        padding: 0.5rem;
+        text-align: center;
+    }
+
+    td{
+    border: 1px solid rgb(121, 111, 111);
+    }
+    th{
+        background-color: grey;
+        color:white;
+    }
+}

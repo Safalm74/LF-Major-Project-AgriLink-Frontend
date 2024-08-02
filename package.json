@@ -1,0 +1,19 @@
+{
+  "name": "frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "compile:sass": "node-sass src/sass/main.scss -o src/css",
+    "watch:sass": "npm run compile:sass && npm run compile:sass -- -w"
+  },
+  "devDependencies": {
+    "axios": "^1.7.2",
+    "node-sass": "^9.0.0",
+    "typescript": "^5.2.2",
+    "vite": "^5.3.4"
+  }
+}
