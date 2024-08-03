@@ -1,0 +1,89 @@
+h1 {
+    font-size: 2em;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+  
+  .order-details__status,
+  .order-details__farm,
+  .order-details__customer {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .order-details__status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    color: #ff6347;
+  }
+  
+  .order-details__farm {
+    color: #4682b4;
+  }
+  
+  .order-details__customer {
+    color: #2e8b57;
+  }
+  .order-details__cancel-btn {
+    background-color: red;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    margin-right: 1rem;
+  }
+  
+  .order-details__accept-btn {
+    background-color: green;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .order-details__deliver-btn{
+    background-color: blue;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    margin-right: 1rem;
+  }
+
+  div > h3 {
+    font-size: 1.5em;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+  .delivered {
+    background-color: #4682b4; 
+    color: white;
+    font-family: Arial, sans-serif;
+  }
+  
+  .canceled {
+    background-color: red;
+    color: white;
+    font-family: Arial, sans-serif;
+  }
+  
+  .pending {
+    background-color: #ff6347; 
+    color: white;
+    font-family: Arial, sans-serif;
+  }
+  
+  .to-deliver {
+    background-color: #2e8b57; 
+    color: white;
+    font-family: Arial, sans-serif;
+  }
+  

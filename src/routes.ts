@@ -4,6 +4,9 @@ import Cart from "./pages/cart";
 import { Account } from "./pages/account";
 import OrderManagement from "./pages/orderManagement";
 import { IRoute } from "./interface/route";
+import { userManagement } from "./pages/UserManagement";
+import { FarmManagement } from "./pages/farmManagement";
+import { ProductManagement } from "./pages/ProductManagement";
 
 const routes: IRoute[] = [
   {
@@ -35,6 +38,24 @@ const routes: IRoute[] = [
     path: "/order-management",
     action: async () => {
       await OrderManagement.load();
+    },
+  },
+  {
+    path: "/user-management",
+    action: async () => {
+      await userManagement.load();
+    },
+  },
+  {
+    path: "/farm-management",
+    action: async () => {
+      await FarmManagement.load();
+    },
+  },
+  {
+    path: "/product-management",
+    action: async () => {
+      await ProductManagement.load();
     },
   },
 ];

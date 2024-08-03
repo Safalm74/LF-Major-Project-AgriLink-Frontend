@@ -8,7 +8,6 @@ import fetchHtml from "../utils/fetchHtml";
 import { getOrderItems } from "../api/orderItems";
 import { getProductDetail } from "../api/products";
 import { getUserById } from "../api/users";
-import { Account } from "./account";
 import { updateOrderStatus } from "../api/orders";
 
 export class OrderDetails {
@@ -41,22 +40,25 @@ export class OrderDetails {
     const statusDiv = document.getElementsByClassName(
       "order-details__status"
     )[0] as HTMLElement;
-
+    const btnWrapper = document.createElement("div");
     statusDiv.innerHTML = `Status:  ${status}`;
+    statusDiv.appendChild(btnWrapper);
 
-    if (status === "delivered" || status === "cancled") {
+    if (status === "delivered" || status === "canceled") {
       return;
     }
 
-    const cancleBtn = document.createElement("button");
-    cancleBtn.classList.add("order-details__cancle-btn");
-    cancleBtn.innerHTML = "Cancle";
-    cancleBtn.addEventListener("click", async () => {
-      await this.cancleOrder(order.id);
-      await Account.load();
+    const cancelBtn = document.createElement("button");
+    cancelBtn.classList.add("order-details__cancel-btn");
+    cancelBtn.innerHTML = "Cancel";
+    cancelBtn.addEventListener("click", async () => {
+      await OrderDetails.load(
+        isFarmOrder,
+        await updateOrderStatus(order.id, "canceled")
+      );
     });
 
-    statusDiv.appendChild(cancleBtn);
+    btnWrapper.appendChild(cancelBtn);
 
     if (!isFarmOrder) {
       return;
@@ -67,10 +69,10 @@ export class OrderDetails {
       acceptBtn.classList.add("order-details__accept-btn");
       acceptBtn.innerHTML = "Accept";
       acceptBtn.addEventListener("click", async () => {
-        updateOrderStatus(order.id, "To deliver");
+        this.load(isFarmOrder, await updateOrderStatus(order.id, "To deliver"));
       });
 
-      statusDiv.appendChild(acceptBtn);
+      btnWrapper.appendChild(acceptBtn);
     }
 
     if (status === "To deliver") {
@@ -78,19 +80,19 @@ export class OrderDetails {
       deliverBtn.classList.add("order-details__deliver-btn");
       deliverBtn.innerHTML = "Delivered";
       deliverBtn.addEventListener("click", async () => {
-        updateOrderStatus(order.id, "delivered");
+        await OrderDetails.load(
+          isFarmOrder,
+          await updateOrderStatus(order.id, "delivered")
+        );
       });
 
-      statusDiv.appendChild(deliverBtn);
+      btnWrapper.appendChild(deliverBtn);
     }
-  }
-  static async cancleOrder(orderId: string) {
-    updateOrderStatus(orderId, "cancled");
   }
 
   static loadTable(table: HTMLTableElement, orderId: string) {
     this.loadTableHeadings(table);
-    this.loadtabledata(table, orderId);
+    this.loadTableData(table, orderId);
   }
 
   static async loadCustomerDetails(customerId: string) {
@@ -125,7 +127,7 @@ export class OrderDetails {
     farmDiv.appendChild(farm);
   }
 
-  static async loadtabledata(table: HTMLTableElement, orderId: string) {
+  static async loadTableData(table: HTMLTableElement, orderId: string) {
     const orderItems: IOrderItems[] = await getOrderItems(orderId);
 
     orderItems.forEach(async (orderItem) => {

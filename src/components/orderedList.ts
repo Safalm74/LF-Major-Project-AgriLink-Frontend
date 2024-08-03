@@ -1,7 +1,7 @@
 export default function orderedList(
   listItems: string[],
   orderedClass?: string,
-  listitemsClass?: string
+  listItemsClass?: string
 ) {
   const ol = document.createElement("ol");
   ol.classList.add(orderedClass || "ordered-list");
@@ -9,7 +9,7 @@ export default function orderedList(
   listItems.forEach((item) => {
     const li = document.createElement("li");
     li.innerHTML = item;
-    li.classList.add(listitemsClass || "list-item");
+    li.classList.add(listItemsClass || "list-item");
     ol.appendChild(li);
   });
 

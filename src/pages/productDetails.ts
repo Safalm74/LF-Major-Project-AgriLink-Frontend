@@ -2,9 +2,11 @@ import { Content } from "../sections/content";
 import fetchHtml from "../utils/fetchHtml";
 import { getProductDetail } from "../api/products";
 import { addToCart } from "../api/cart";
+import Toast from "../components/toast";
 
 export default class ProductDetails {
   static async init() {
+    window.history.pushState(null, "", "/product-details");
     const content = document.createElement("div");
     content.classList.add("product-details");
     content.innerHTML = await fetchHtml("pages/productDetails");
@@ -55,19 +57,26 @@ export default class ProductDetails {
     const productDescription = productDetails.getElementsByClassName(
       "product-details__product-description"
     )[0];
-    const productRating = productDetails.getElementsByClassName(
-      "product-details__product-rating"
-    )[0];
     const productUnit = productDetails.getElementsByClassName(
       "product-details__product-unit"
     )[0];
 
     const addToCartBtn = productDetails.getElementsByClassName(
       "product-details__add-to-cart-btn"
-    )[0];
+    )[0] as HTMLButtonElement;
 
     addToCartBtn.addEventListener("click", async () => {
+      if (!localStorage.getItem("userDetails")) {
+        Toast("Please login to add product to cart", "error");
+        return;
+      }
+      if (productData.quantity < 1) {
+        Toast("Product out of stock", "error");
+        return;
+      }
+
       await addToCart(productId, +productQuantity.value);
+      Toast("Product added to cart", "success");
     });
 
     productImage.src = productData.imageUrl;
@@ -78,7 +87,6 @@ export default class ProductDetails {
     productPrice.innerHTML = `Rs. ${productData.price}`;
     productQuantity.max = `${productData.quantity}`;
     productDescription.innerHTML = productData.description;
-    productRating.innerHTML = "4.5";
     productUnit.innerHTML = productData.quantityUnit;
   }
 }

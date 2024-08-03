@@ -77,6 +77,23 @@ export default class OrderManagement {
       tr.addEventListener("click", () => {
         OrderDetails.load(true, order);
       });
+
+      switch (order.orderStatus) {
+        case "pending":
+          tr.classList.add("pending");
+          break;
+        case "delivered":
+          tr.classList.add("delivered");
+          break;
+        case "canceled":
+          tr.classList.add("canceled");
+          break;
+        case "To deliver":
+          tr.classList.add("to-deliver");
+          break;
+        default:
+          break;
+      }
       table.appendChild(tr);
     });
   }

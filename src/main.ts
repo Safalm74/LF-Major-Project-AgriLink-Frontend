@@ -3,11 +3,7 @@ import { Layout } from "./layout";
 import Router from "./routes";
 
 document.addEventListener("DOMContentLoaded", () => {
-  try {
-    Layout.layout();
-  } catch (error) {
-    console.log(error);
-  }
+  Layout.layout();
 
   window.addEventListener("popstate", async () => {
     await Router.resolve(window.location.pathname);

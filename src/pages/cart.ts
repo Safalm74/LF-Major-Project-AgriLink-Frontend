@@ -4,6 +4,8 @@ import fetchHtml from "../utils/fetchHtml";
 import { getProductDetail } from "../api/products";
 import { deleteCart, getCartData, updateCart } from "../api/cart";
 import { createOrder } from "../api/orders";
+import { Account } from "./account";
+import Toast from "../components/toast";
 
 interface ICartWithFarm extends ICart {
   farmId?: string;
@@ -26,17 +28,24 @@ export default class Cart {
   }
 
   static async load() {
-    Content.replaceContent(await this.init());
+    const cart = await this.init();
+    Content.replaceContent(cart);
 
     await this.getCartItems();
 
-    //this.loadContent();
+    if (this.cartItems.length === 0) {
+      cart.innerHTML = "";
+      const p = document.createElement("h1");
+      p.innerHTML = "Cart is empty";
+      p.classList.add("empty-cart");
+      cart.appendChild(p);
+    } else {
+      this.loadTotalAmount();
 
-    this.loadTotalAmount();
+      this.loadTableContent();
 
-    this.loadTableContent();
-
-    this.btnListener();
+      this.btnListener();
+    }
   }
 
   static async getCartItems() {
@@ -49,7 +58,7 @@ export default class Cart {
         data.price = product.price;
         data.farmId = product.farmId;
         data.productImage = product.imageUrl;
-        data.productName = product.name;
+        data.productName = product.productName;
         data.productMaxQuantity = product.quantity;
 
         return data;
@@ -75,8 +84,10 @@ export default class Cart {
       });
     });
 
-    checkoutBtn.addEventListener("click", () => {
-      this.checkout();
+    checkoutBtn.addEventListener("click", async () => {
+      await this.checkout();
+
+      Account.load();
     });
   }
 
@@ -150,6 +161,7 @@ export default class Cart {
     removeFromCartBtn.addEventListener("click", async () => {
       await deleteCart(data.id);
 
+      Toast("Item removed from cart", "success");
       this.load();
     });
 
@@ -220,7 +232,7 @@ export default class Cart {
           orderItems: [
             {
               productId: data.productId,
-              unitPrice: data.quantity,
+              unitPrice: data.price!,
               quantity: data.quantity,
             },
           ],

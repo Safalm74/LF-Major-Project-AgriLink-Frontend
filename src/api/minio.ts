@@ -13,6 +13,7 @@ export async function uploadImage(image: File) {
       toast("Something went wrong", "error");
       return;
     }
+
     await axios.put(imgUrl.url, image, {
       headers: {
         "Content-Type": image.type,

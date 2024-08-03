@@ -5,6 +5,7 @@
 //base
 @import 'base/base';
 @import 'base/utility';
+@import 'base/typography';
 
 //layout
 @import 'layout/header';
@@ -25,3 +26,5 @@
 @import 'pages/productDetails';
 @import 'pages/inventory';
 @import 'pages/cart';
+@import 'pages/orderDetails';
+@import 'pages/account';

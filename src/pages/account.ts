@@ -1,4 +1,4 @@
-import { Iuser } from "../interface/user";
+import { IUser } from "../interface/user";
 import { Content } from "../sections/content";
 import fetchHtml from "../utils/fetchHtml";
 import { getUserOrders } from "../api/orders";
@@ -10,6 +10,7 @@ import { ChangeToFarmerForm } from "../components/changeToFarmerForm";
 import { AddFarmForm } from "../components/addFarm";
 import { IFarm } from "../interface/farm";
 import { deleteFarm, getAllFarmsByUserId } from "../api/farm";
+import Toast from "../components/toast";
 
 export class Account {
   static async init() {
@@ -43,8 +44,7 @@ export class Account {
         Modal.modal(
           userRegisterForm(
             true,
-            JSON.parse(localStorage.getItem("userDetails")!).id,
-            false
+            JSON.parse(localStorage.getItem("userDetails")!).id
           )!
         );
       });
@@ -61,7 +61,7 @@ export class Account {
 
       const savedUser = JSON.parse(
         localStorage.getItem("userDetails")!
-      ) as Iuser;
+      ) as IUser;
 
       userDetail.querySelector("h1")!.innerHTML = `Hi, ${savedUser.name}`;
       userDetail.querySelector("p")!.innerHTML = savedUser.email;
@@ -73,7 +73,7 @@ export class Account {
       this.loadTable(orders);
     }
 
-    const userDetails: Iuser = JSON.parse(localStorage.getItem("userDetails")!);
+    const userDetails: IUser = JSON.parse(localStorage.getItem("userDetails")!);
 
     if (userDetails.role === "customer") {
       const convertToFarmerBtn = document.createElement("button");
@@ -105,7 +105,7 @@ export class Account {
 
   static async loadTable(ordersDiv: HTMLElement) {
     const table = document.createElement("table");
-    this.loadtableHeadings(table);
+    this.loadTableHeadings(table);
     this.loadTableData(table);
 
     ordersDiv.appendChild(table);
@@ -130,6 +130,23 @@ export class Account {
       tr.appendChild(orderStatus);
       tr.appendChild(totalPrice);
 
+      switch (order.orderStatus) {
+        case "pending":
+          tr.classList.add("pending");
+          break;
+        case "delivered":
+          tr.classList.add("delivered");
+          break;
+        case "canceled":
+          tr.classList.add("canceled");
+          break;
+        case "To deliver":
+          tr.classList.add("to-deliver");
+          break;
+        default:
+          break;
+      }
+
       tr.addEventListener("click", () => {
         OrderDetails.load(false, order);
       });
@@ -138,7 +155,7 @@ export class Account {
     });
   }
 
-  static loadtableHeadings(table: HTMLTableElement) {
+  static loadTableHeadings(table: HTMLTableElement) {
     const tableHeadings = [
       "Order Id",
       "Order Date",
@@ -189,10 +206,19 @@ export class Account {
 
       editBtn.addEventListener("click", async () => {
         await AddFarmForm.load("Edit Farm", farm.id);
+
+        localStorage.setItem(
+          "farm",
+          JSON.stringify(await getAllFarmsByUserId())
+        );
+
+        Toast("Farm updated successfully", "success");
       });
 
       deleteBtn.addEventListener("click", async () => {
         await deleteFarm(farm.id!);
+
+        Toast("Farm deleted successfully", "success");
 
         table.removeChild(tr);
 

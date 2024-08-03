@@ -1,4 +1,5 @@
-import Home from "../pages/home";
+import { userManagement } from "../pages/UserManagement";
+import Router from "../routes";
 import { Header } from "./header";
 
 export class Content {
@@ -7,7 +8,19 @@ export class Content {
     content.classList.add("contents");
     content.id = "content";
 
-    Home.load();
+    const userDetails = JSON.parse(localStorage.getItem("userDetails")!);
+
+    if (!userDetails) {
+      Router.resolve("/home");
+
+      return content;
+    }
+
+    if (userDetails.role === "admin") {
+      content.appendChild(await userManagement.init());
+    } else {
+      Router.resolve("/home");
+    }
 
     return content;
   }
@@ -30,7 +43,10 @@ export class Content {
     const header = document.getElementsByClassName("header")[0];
     Header.loadImageCarousel(header as HTMLElement);
 
-    window.scrollTo(0, 0);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
 
     return content!;
   }

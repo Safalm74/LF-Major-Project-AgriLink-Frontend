@@ -21,6 +21,12 @@ li {
 .display-none {
   display: none; }
 
+body {
+  background-color: #f5f5f5;
+  color: #333;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  line-height: 1.6; }
+
 .header {
   display: flex;
   min-height: 100vh;
@@ -105,6 +111,15 @@ li {
     justify-content: space-between;
     width: 50%;
     flex-wrap: wrap; }
+    .footer__about-and-contact div {
+      flex: 1;
+      margin: 0 1rem; }
+    .footer__about-and-contact h3 {
+      color: white;
+      margin-bottom: 1rem;
+      text-decoration: underline white 1px;
+      line-height: 1.5rem;
+      padding-bottom: 1rem; }
   .footer__copy-right {
     display: flex;
     flex-direction: column;
@@ -185,17 +200,14 @@ li {
   align-items: center;
   justify-content: space-between;
   padding: 1rem 3.2rem;
-  background-color: transparent;
-  transition: background-color 0.3s;
+  background-color: #07212e;
   width: 100%;
-  min-height: 10vh; }
-  .nav--sticky {
-    background-color: #07212e;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000; }
+  min-height: 10vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; }
   .nav__logo {
     width: 100%; }
   .nav__logo-wrapper {
@@ -266,7 +278,7 @@ li {
   position: relative;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   border-radius: 1rem;
   box-shadow: 0 0.2rem 0.8rem 0.2rem rgba(20, 1, 1, 0.1);
   transition: all .2s;
@@ -320,7 +332,9 @@ table {
   table th {
     background-color: grey;
     color: white; }
-  table tr:hover {
+  table tr {
+    transition: all 0.3s ease; }
+  table tr:not(:first-child):hover {
     transform: scale(1.01); }
 
 .about {
@@ -355,24 +369,69 @@ table {
       color: #fca311; }
 
 .product-details {
-  width: 100%;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  align-items: center;
-  padding: 1rem; }
+  justify-content: center;
+  align-items: flex-start;
+  margin: 20px;
+  font-family: Arial, sans-serif;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
   .product-details__image-container {
-    display: flex;
     flex: 1;
-    justify-content: center;
-    margin: 1rem; }
+    max-width: 300px;
+    margin-right: 20px; }
     .product-details__image-container img {
-      width: 100%; }
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
   .product-details__details-container {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    flex-wrap: wrap; }
+    flex: 2;
+    max-width: 600px; }
+    .product-details__details-container h2 {
+      font-size: 2rem;
+      margin-bottom: 1.1rem;
+      color: #333; }
+    .product-details__details-container p {
+      margin-bottom: 10px;
+      color: #666; }
+      .product-details__details-container p.product-details__product-description {
+        font-size: 1.1em;
+        line-height: 1.5; }
+      .product-details__details-container p.product-details__product-category, .product-details__details-container p.product-details__product-rating {
+        font-weight: bold;
+        font-size: 0.9em;
+        color: #666;
+        margin-bottom: 10px; }
+  .product-details__product-price {
+    font-size: 2.5em;
+    color: #27ae60;
+    margin-bottom: 10px; }
+    .product-details__product-price span {
+      font-size: 0.8em;
+      color: #999; }
+  .product-details__product-quantity {
+    width: 60px;
+    padding: 5px;
+    font-size: 1em;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px; }
+  .product-details__add-to-cart-btn {
+    background-color: #27ae60;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 1em;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s; }
+    .product-details__add-to-cart-btn:hover {
+      background-color: #218c53; }
+  .product-details__product-unit {
+    margin-left: 5px;
+    font-size: 0.9em;
+    color: #666; }
 
 .inventory {
   height: 100%;
@@ -478,3 +537,122 @@ table {
         .cart div .total-table th:first-child {
           background-color: grey;
           color: white; }
+
+h1 {
+  font-size: 2em;
+  margin-bottom: 1rem;
+  color: #333; }
+
+.order-details__status,
+.order-details__farm,
+.order-details__customer {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 4px; }
+
+.order-details__status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #ff6347; }
+
+.order-details__farm {
+  color: #4682b4; }
+
+.order-details__customer {
+  color: #2e8b57; }
+
+.order-details__cancel-btn {
+  background-color: red;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  margin-right: 1rem; }
+
+.order-details__accept-btn {
+  background-color: green;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer; }
+
+.order-details__deliver-btn {
+  background-color: blue;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  margin-right: 1rem; }
+
+div > h3 {
+  font-size: 1.5em;
+  margin-bottom: 0.5rem;
+  color: #333; }
+
+.delivered {
+  background-color: #4682b4;
+  color: white;
+  font-family: Arial, sans-serif; }
+
+.canceled {
+  background-color: red;
+  color: white;
+  font-family: Arial, sans-serif; }
+
+.pending {
+  background-color: #ff6347;
+  color: white;
+  font-family: Arial, sans-serif; }
+
+.to-deliver {
+  background-color: #2e8b57;
+  color: white;
+  font-family: Arial, sans-serif; }
+
+.account__user-detail h1 {
+  font-size: 2em;
+  color: #333;
+  margin-bottom: 0.5em; }
+
+.account__user-detail p {
+  font-size: 1em;
+  color: #777;
+  margin-bottom: 1.5em; }
+
+.account__orders {
+  margin-top: 2em; }
+  .account__orders h3 {
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 1em; }
+
+.account__farm {
+  margin-top: 2em; }
+
+.account__add-farm-btn {
+  margin-top: 2em;
+  background-color: #4CAF50;
+  color: white;
+  padding: 0.5em 1em;
+  border: none;
+  cursor: pointer;
+  margin: 1rem 0; }
+
+.account__edit-btn, .account__logout-btn {
+  font-size: 1em;
+  padding: 0.5em 1em;
+  border: none;
+  cursor: pointer;
+  margin-right: 1em; }
+  .account__edit-btn--edit, button.account__edit-btn, .account__logout-btn--edit {
+    background-color: #4CAF50;
+    color: white; }
+  .account__edit-btn--logout, .account__logout-btn--logout, button.account__logout-btn {
+    background-color: #f44336;
+    color: white; }

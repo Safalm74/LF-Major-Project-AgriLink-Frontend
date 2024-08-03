@@ -3,20 +3,15 @@
     align-items: center;
     justify-content: space-between;
     padding: 1rem 3.2rem;
-    background-color: transparent;
-    transition: background-color 0.3s;
+    background-color: #07212e;
     width: 100%;
     min-height: 10vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
 
-
-    &--sticky {
-        background-color: #07212e;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 1000;
-    }
 
     &__logo {
         width: 100%;
@@ -34,7 +29,7 @@
         align-items: center;
     }
 
-    
+
 
     & ul {
         display: flex;
@@ -49,15 +44,15 @@
         margin-right: 0;
     }
 
-    button{
+    button {
         background-color: transparent;
         border: none;
-        color:white;
+        color: white;
         font-family: sans-serif;
         font-size: 1.3rem;
         font-weight: 700;
 
-        &:hover{
+        &:hover {
             color: #fca311;
         }
 
@@ -68,8 +63,8 @@
             background-color: #17526f;
             padding: 1rem;
 
-            &:hover{
-                background-color:   white;
+            &:hover {
+                background-color: white;
                 color: #17526f;
             }
         }

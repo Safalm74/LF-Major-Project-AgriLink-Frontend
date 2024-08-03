@@ -17,9 +17,12 @@ table{
         background-color: grey;
         color:white;
     }
-    tr:hover{
+    tr{
+        transition: all 0.3s ease;
+    }
+    
+    tr:not(:first-child):hover {
         transform: scale(1.01);
-        
 
     }
 }

@@ -1,5 +1,7 @@
 import { deleteFarm, getAllFarms } from "../api/farm";
+import Toast from "../components/toast";
 import { IFarm } from "../interface/farm";
+import Router from "../routes";
 import { Content } from "../sections/content";
 
 export class FarmManagement {
@@ -24,9 +26,12 @@ export class FarmManagement {
         `;
 
       const deleteBtn = document.createElement("button");
-      deleteBtn.innerHTML = `delete`;
+      deleteBtn.innerHTML = `<i class="fa-solid fa-trash"></i>`;
       deleteBtn.addEventListener("click", async () => {
         await deleteFarm(farm.id!);
+
+        Toast("Farm deleted successfully", "success");
+        Router.resolve("/farm-management");
       });
 
       tableRow.appendChild(deleteBtn);

@@ -4,7 +4,7 @@ import { errorHandler } from "../utils/errorHandler";
 import { AxiosError } from "axios";
 import Modal from "../sections/modal";
 
-export function userRegisterForm(isupdate?: boolean, updatingId?: string) {
+export function userRegisterForm(isUpdate?: boolean, updatingId?: string) {
   const form = document.createElement("form");
   form.classList.add("form");
   form.method = "post";
@@ -67,7 +67,7 @@ export function userRegisterForm(isupdate?: boolean, updatingId?: string) {
   btns.classList.add("btns");
   btns.append(registerBtn);
 
-  if (isupdate) {
+  if (isUpdate) {
     if (!updatingId) {
       toast("user id not found", "error");
 
@@ -89,7 +89,7 @@ export function userRegisterForm(isupdate?: boolean, updatingId?: string) {
 
   form.addEventListener(
     "submit",
-    isupdate
+    isUpdate
       ? (event) => handleFormSubmitUpdateUser(event, updatingId!)
       : handleFormSubmitAddUser
   );
@@ -97,23 +97,23 @@ export function userRegisterForm(isupdate?: boolean, updatingId?: string) {
   const name = document.createElement("div");
   name.classList.add("name");
   name.append(
-    wrapWithLable("First Name:", firstName),
-    wrapWithLable("Last Name:", lastName)
+    wrapWithLabel("First Name:", firstName),
+    wrapWithLabel("Last Name:", lastName)
   );
 
   form.append(
     name,
-    wrapWithLable("Email", email),
-    wrapWithLable("Phone", phone),
-    wrapWithLable("Address", address),
-    wrapWithLable("Password", password),
-    wrapWithLable("Confirm Password", confirmPassword),
+    wrapWithLabel("Email", email),
+    wrapWithLabel("Phone", phone),
+    wrapWithLabel("Address", address),
+    wrapWithLabel("Password", password),
+    wrapWithLabel("Confirm Password", confirmPassword),
     btns
   );
   return form;
 }
 
-function wrapWithLable(text: string, element: HTMLElement) {
+function wrapWithLabel(text: string, element: HTMLElement) {
   const wrapper = document.createElement("div");
   const textNode = document.createElement("p");
   textNode.innerHTML = text;

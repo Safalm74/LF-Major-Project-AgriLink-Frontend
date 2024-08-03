@@ -28,7 +28,5 @@ export async function refreshAccessToken() {
   localStorage.removeItem("accessToken");
   localStorage.setItem("accessToken", accessToken.accessToken);
 
-  console.log(accessToken.accessToken);
-
   return accessToken;
 }

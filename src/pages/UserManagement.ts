@@ -1,5 +1,7 @@
 import { deleteUser, getAllUser } from "../api/users";
-import { Iuser } from "../interface/user";
+import Toast from "../components/toast";
+import { IUser } from "../interface/user";
+import Router from "../routes";
 import { Content } from "../sections/content";
 
 export class userManagement {
@@ -16,7 +18,7 @@ export class userManagement {
 
     table.appendChild(tableRow);
 
-    const userData: Iuser[] = await getAllUser();
+    const userData: IUser[] = await getAllUser();
 
     userData.forEach((user) => {
       const tableRow = document.createElement("tr");
@@ -28,9 +30,12 @@ export class userManagement {
               <td>${user.role}</td>
             `;
 
-        deleteBtn.innerHTML = `delete`;
+        deleteBtn.innerHTML = `<i class="fa-solid fa-trash"></i>`;
         deleteBtn.addEventListener("click", async () => {
           await deleteUser(user.id!);
+
+          Toast("User deleted successfully", "success");
+          Router.resolve("/user-management");
         });
 
         tableRow.appendChild(deleteBtn);

@@ -4,13 +4,11 @@ import Modal from "../sections/modal";
 import logInForm from "./logInForm";
 import getInitials from "../utils/getInitials";
 import Router from "../routes";
-import { userManagement } from "../pages/UserManagement";
-import { FarmManagement } from "../pages/farmManagement";
-import { ProductManagement } from "../pages/ProductManagement";
 
 function isLoggedIn() {
   const accessToken = localStorage.getItem("accessToken");
-  if (accessToken) {
+  const userDetails = localStorage.getItem("userDetails");
+  if (accessToken && userDetails) {
     return true;
   }
   return false;
@@ -42,9 +40,7 @@ export function nav(): HTMLElement {
       btnName: "Home",
       btnClass: "btn",
       btnFunction: async () => {
-        // Home.load();
-        // window.history.pushState(null, "", "/");
-        await Router.resolve("/");
+        await Router.resolve("/home");
       },
     },
     {
@@ -61,8 +57,6 @@ export function nav(): HTMLElement {
       btnName: "Inventory",
       btnClass: localStorage.getItem("farm") ? "nav__btns" : "display-none",
       btnFunction: async () => {
-        //Content.replaceContent(await Inventory.load());
-        // window.history.pushState(null, "", "/inventory");
         await Router.resolve("/inventory");
       },
     },
@@ -70,9 +64,6 @@ export function nav(): HTMLElement {
       btnName: "Order Management",
       btnClass: localStorage.getItem("farm") ? "nav__btns" : "display-none",
       btnFunction: async () => {
-        //OrderManagement.load();
-
-        // window.history.pushState(null, "", "/order-management");
         await Router.resolve("/order-management");
       },
     },
@@ -129,15 +120,15 @@ export function nav(): HTMLElement {
   productManagementBtn.innerHTML = "Product Management";
 
   userManagementBtn?.addEventListener("click", async () => {
-    await userManagement.load();
+    Router.resolve("/user-management");
   });
 
   farmManagementBtn?.addEventListener("click", async () => {
-    await FarmManagement.load();
+    Router.resolve("/farm-management");
   });
 
   productManagementBtn?.addEventListener("click", async () => {
-    await ProductManagement.load();
+    Router.resolve("/product-management");
   });
 
   nav.appendChild(logoWrapper);

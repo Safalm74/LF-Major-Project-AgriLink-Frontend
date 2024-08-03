@@ -6,13 +6,18 @@ import toast from "../components/toast";
 const endPoint = backendServerURL + `/orders`;
 
 export async function createOrder(data: ICartToCheckout) {
-  console.log(data);
   return await api.post(endPoint, data);
 }
 
 export function getFarmOrders(farmId: string) {
   return api.get(endPoint + `/farm?farmId=${farmId}`).then((res) => {
     const orders: IOrderForFarm[] = res.data;
+
+    orders.forEach((order) => {
+      order.orderDate = new Date(order.orderDate);
+    });
+
+    orders.sort((a, b) => b.orderDate.getTime() - a.orderDate.getTime());
 
     return orders;
   });
@@ -22,7 +27,11 @@ export function getUserOrders() {
   return api.get(backendServerURL + "/orders").then((res) => {
     const orders: IOrders[] = res.data;
 
-    localStorage.setItem("orders", JSON.stringify(res.data));
+    orders.forEach((order) => {
+      order.orderDate = new Date(order.orderDate);
+    });
+
+    orders.sort((a, b) => b.orderDate.getTime() - a.orderDate.getTime());
 
     return orders;
   });
@@ -33,7 +42,9 @@ export async function updateOrderStatus(orderId: string, status: string) {
     .patch(endPoint + `/${orderId}`, {
       orderStatus: status,
     })
-    .then(() => {
+    .then((res) => {
       toast(`Order status updated to ${status}`, "success");
+      const data = res.data[0];
+      return data;
     });
 }

@@ -1,4 +1,4 @@
-export default function toast(
+export default function Toast(
   message: string,
   type: string,
   time: number = 1500

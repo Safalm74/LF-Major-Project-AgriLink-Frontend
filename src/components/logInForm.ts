@@ -6,6 +6,7 @@ import toast from "./toast";
 import { login } from "../api/auth";
 import { AxiosError } from "axios";
 import { errorHandler } from "../utils/errorHandler";
+import Router from "../routes";
 
 async function handleFormSubmit(event: Event) {
   event.preventDefault();
@@ -28,6 +29,12 @@ async function handleFormSubmit(event: Event) {
     toast("Log in successful", "success");
 
     refreshNav();
+
+    if (JSON.parse(localStorage.getItem("userDetails")!).role === "admin") {
+      Router.resolve("/user-management");
+    } else {
+      Router.resolve("/home");
+    }
   } catch (error) {
     const errorResponse = error as AxiosError;
 
@@ -81,15 +88,15 @@ export default function logInForm() {
 
   form.addEventListener("submit", handleFormSubmit);
   form.append(
-    wrapWithLable("Email:", email),
-    wrapWithLable("Password:", password),
+    wrapWithLabel("Email:", email),
+    wrapWithLabel("Password:", password),
     btns
   );
 
   return form;
 }
 
-function wrapWithLable(text: string, element: HTMLElement) {
+function wrapWithLabel(text: string, element: HTMLElement) {
   const wrapper = document.createElement("div");
   const textNode = document.createElement("p");
   textNode.innerHTML = text;

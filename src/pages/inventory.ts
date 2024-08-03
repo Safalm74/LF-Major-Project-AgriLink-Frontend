@@ -91,7 +91,6 @@ export default class Inventory {
       tableRow.innerHTML = this.rowData(product);
 
       const editBtn = tableRow.getElementsByClassName("edit")[0];
-      editBtn.innerHTML = "Edit";
       editBtn.addEventListener("click", async () => {
         await UpdateProductForm.load(product.id);
       });

@@ -37,12 +37,12 @@ export default class AddProductForm {
     const description = formData.get("description") as string;
     const category = formData.get("category") as string;
 
-    if (!productImage) {
+    const image = productImage.files![0];
+
+    if (!image) {
       toast("Please select an image", "error");
       return;
     }
-
-    const image = productImage.files![0];
 
     try {
       const fileName = await uploadImage(image);
@@ -59,9 +59,13 @@ export default class AddProductForm {
           imageUrl: fileName,
         };
 
-        console.log(productToUpload);
-
         await createProduct(productToUpload);
+
+        Modal.removeModal();
+
+        toast("Product added successfully", "success");
+
+        Inventory.load();
       }
     } catch (error) {
       errorHandler((error as AxiosError).response!);
@@ -78,12 +82,6 @@ export default class AddProductForm {
           addProductForm.getElementsByTagName("form")[0],
           farmId
         );
-
-        Modal.removeModal();
-
-        toast("Product added successfully", "success");
-
-        Inventory.load();
       });
   }
 }

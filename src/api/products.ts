@@ -49,6 +49,8 @@ export async function getAllProducts(searchKey?: string) {
 
   const data: IProduct[] = (await api.get(getProductEndPoint)).data;
 
+  sessionStorage.setItem("products", JSON.stringify(data));
+
   return data;
 }
 

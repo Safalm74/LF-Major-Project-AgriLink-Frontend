@@ -1,0 +1,67 @@
+.account {
+    &__user-detail {
+      h1 {
+        font-size: 2em;
+        color: #333;
+        margin-bottom: 0.5em;
+      }
+  
+      p {
+        font-size: 1em;
+        color: #777;
+        margin-bottom: 1.5em;
+      }
+    }
+  
+    &__orders {
+      margin-top: 2em;
+  
+      h3 {
+        font-size: 1.5em;
+        color: #333;
+        margin-bottom: 1em;
+      }
+    }
+  
+    &__farm {
+      margin-top: 2em;
+    }
+    &__add-farm-btn{
+      margin-top: 2em;
+      background-color: #4CAF50;
+      color: white;
+      padding: 0.5em 1em;
+      border: none;
+      cursor: pointer;
+      margin:1rem 0;
+    }
+    &__edit-btn,
+    &__logout-btn {
+      font-size: 1em;
+      padding: 0.5em 1em;
+      border: none;
+      cursor: pointer;
+      margin-right: 1em;
+  
+      &--edit {
+        background-color: #4CAF50;
+        color: white;
+      }
+  
+      &--logout {
+        background-color: #f44336;
+        color: white;
+      }
+    }
+  }
+  
+  button {
+    &.account__edit-btn {
+      @extend .account__edit-btn--edit;
+    }
+  
+    &.account__logout-btn {
+      @extend .account__logout-btn--logout;
+    }
+  }
+  
