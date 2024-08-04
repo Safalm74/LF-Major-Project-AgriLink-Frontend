@@ -199,6 +199,8 @@ async function handleFormSubmitUpdateUser(event: Event, userId: string) {
 
   try {
     updateUser(userId, lastName, firstName, email, password, phone, address);
+
+    Toast("User updated successfully", "success");
     Modal.removeModal();
   } catch (error) {
     errorHandler((error as AxiosError).response!);
