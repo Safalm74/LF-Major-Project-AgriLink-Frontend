@@ -54,27 +54,29 @@ export class Account {
 
   static loadContent(account: HTMLElement) {
     const userDetail = account.querySelector(".account__user-detail");
+    let savedUser: IUser;
 
     if (userDetail) {
       if (!localStorage.getItem("userDetails")) {
         return;
       }
-
-      const savedUser = JSON.parse(
-        localStorage.getItem("userDetails")!
-      ) as IUser;
-
+      savedUser = JSON.parse(localStorage.getItem("userDetails")!) as IUser;
       userDetail.querySelector("h1")!.innerHTML = `Hi, ${savedUser.name}`;
       userDetail.querySelector("p")!.innerHTML = savedUser.email;
     }
 
     const orders = account.querySelector(".account__orders") as HTMLElement;
+    const userDetails: IUser = JSON.parse(localStorage.getItem("userDetails")!);
+
+    if (userDetails.role === "admin") {
+      (
+        document.getElementsByClassName("account__orders")[0] as HTMLElement
+      ).classList.add("display-none");
+    }
 
     if (orders) {
       this.loadTable(orders);
     }
-
-    const userDetails: IUser = JSON.parse(localStorage.getItem("userDetails")!);
 
     if (userDetails.role === "customer") {
       const convertToFarmerBtn = document.createElement("button");
@@ -212,8 +214,6 @@ export class Account {
           "farm",
           JSON.stringify(await getAllFarmsByUserId())
         );
-
-        Toast("Farm updated successfully", "success");
       });
 
       deleteBtn.addEventListener("click", async () => {

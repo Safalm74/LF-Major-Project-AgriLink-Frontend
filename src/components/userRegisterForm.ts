@@ -70,7 +70,10 @@ export function userRegisterForm(isUpdate?: boolean, updatingId?: string) {
   const btns = document.createElement("div");
   btns.classList.add("btns");
   btns.append(registerBtn);
-  btns.append(loginBtn);
+
+  if (!isUpdate) {
+    btns.append(loginBtn);
+  }
 
   if (isUpdate) {
     if (!updatingId) {
@@ -119,13 +122,13 @@ export function userRegisterForm(isUpdate?: boolean, updatingId?: string) {
     wrapWithLabel("Password:", password),
     wrapWithLabel("Confirm Password:", confirmPassword)
   );
-  form.append(
-    name,
-    contact,
-    passwords,
-    wrapWithLabel("Address:", address),
-    btns
-  );
+
+  const addressWrapper = document.createElement("div");
+  addressWrapper.classList.add("address");
+  addressWrapper.append(wrapWithLabel("Address:", address));
+  addressWrapper.append(document.createElement("div"));
+
+  form.append(name, contact, passwords, addressWrapper, btns);
   return form;
 }
 

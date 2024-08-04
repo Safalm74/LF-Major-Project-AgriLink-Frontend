@@ -287,7 +287,7 @@ body {
     display: flex;
     gap: 1rem;
     width: 100%; }
-  .form .contact {
+  .form .contact, .form .address {
     display: flex;
     gap: 1rem;
     width: 100%; }
@@ -397,13 +397,20 @@ button {
   cursor: pointer;
   box-shadow: 0 0.2rem 0.8rem 0.2rem rgba(20, 1, 1, 0.1);
   transition: all .2s;
-  padding: 1rem 1rem; }
+  padding: 1rem 1rem;
+  margin: 1rem 0; }
   button:hover {
     box-shadow: 0 0.2rem 0.8rem 0.2rem rgba(20, 1, 1, 0.2);
     transform: translateY(-0.1rem); }
   button:active {
     box-shadow: 0 0.2rem 0.8rem 0.2rem rgba(20, 1, 1, 0.1);
     transform: translateY(0.1rem); }
+
+.green-btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 1rem 1rem;
+  margin: 1rem 0; }
 
 .about {
   padding: 5rem; }

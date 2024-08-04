@@ -4,6 +4,7 @@ button {
     box-shadow: 0 .2rem .8rem .2rem rgba(20, 1, 1, .1);
     transition: all .2s;
     padding: 1rem 1rem;
+    margin: 1rem 0;
 
     &:hover {
         box-shadow: 0 .2rem .8rem .2rem rgba(20, 1, 1, .2);
@@ -13,4 +14,12 @@ button {
         box-shadow: 0 .2rem .8rem .2rem rgba(20, 1, 1, .1);
         transform: translateY(.1rem);
     }
+
+}
+
+.green-btn{
+    background-color: #4CAF50;
+    color: white;
+    padding: 1rem 1rem;
+    margin: 1rem 0;
 }
