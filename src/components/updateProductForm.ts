@@ -107,7 +107,7 @@ export class UpdateProductForm {
         updateProduct(productId, productToUpload);
       }
     } catch (error) {
-      console.log(error);
+      toast("Something went wrong", "error");
     }
   }
 }
