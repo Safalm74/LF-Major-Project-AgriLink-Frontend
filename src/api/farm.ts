@@ -19,7 +19,7 @@ export async function createFarm(farmToCreate: Omit<IFarm, "id">) {
 }
 
 export function getFarmDetailsById(farmId: string) {
-  return api.get(endPoint + `/?farmId=${farmId}`).then((res) => {
+  return api.get(endPoint + `/?id=${farmId}`).then((res) => {
     const farm: IFarm = res.data[0];
 
     return farm;

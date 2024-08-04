@@ -43,8 +43,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-bottom:7rem;    
-        font-size: large;
+        margin-bottom:3.5rem;    
+        font-size: 2rem;
         span{
             color:#fca311;
         }
@@ -62,6 +62,10 @@
 
     &__farm-name{
         font-family: Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        select{
+            margin-left: 1rem;
+        }
     }
     button {
         font-family: Arial, sans-serif;

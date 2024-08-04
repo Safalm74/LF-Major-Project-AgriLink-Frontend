@@ -22,6 +22,7 @@ export function refreshNav() {
 }
 
 export function nav(): HTMLElement {
+  const navLogoPlaceholder = document.createElement("div");
   const userDetails = JSON.parse(localStorage.getItem("userDetails")!);
   const nav = document.createElement("nav");
   nav.classList.add("nav");
@@ -72,7 +73,7 @@ export function nav(): HTMLElement {
   const searchBar = document.createElement("input");
   searchBar.classList.add("search-bar");
   searchBar.type = "search";
-  searchBar.placeholder = "Product search...";
+  searchBar.placeholder = "Search Products";
 
   let accountBtns;
 
@@ -130,7 +131,7 @@ export function nav(): HTMLElement {
   productManagementBtn?.addEventListener("click", async () => {
     Router.resolve("/product-management");
   });
-
+  nav.appendChild(navLogoPlaceholder);
   nav.appendChild(logoWrapper);
   if (userDetails?.role !== "admin") {
     nav.appendChild(navBtns);

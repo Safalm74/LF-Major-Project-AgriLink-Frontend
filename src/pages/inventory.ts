@@ -120,7 +120,11 @@ export default class Inventory {
     rowData += this.tableData(product.quantityUnit);
     rowData += this.tableData(product.description);
     rowData += this.tableData(product.category);
-    rowData += `<td><i class="fa-solid fa-pen-to-square edit"></i><i class="fa-solid fa-trash delete"></i></td>`;
+    rowData += `<td>
+    <div>
+      <i class="fa-solid fa-pen-to-square edit" style="color:#4C9EFF" ></i>
+      <i class="fa-solid fa-trash delete" style="color:#FF4C4C"></i></td>
+    </div>`;
 
     return rowData;
   }

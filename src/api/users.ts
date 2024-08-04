@@ -1,6 +1,6 @@
 import { backendServerURL } from "../constants";
 import { IFarm } from "../interface/farm";
-import { IUser } from "../interface/user";
+import { ICustomer } from "../interface/user";
 import api from "./axiosApi";
 
 const endPoint = backendServerURL + "/user";
@@ -29,7 +29,7 @@ export async function createUser(
 
 export async function getAllUser() {
   return api.get(endPoint).then((res) => {
-    const data: IUser[] = res.data;
+    const data: ICustomer[] = res.data;
 
     return data;
   });

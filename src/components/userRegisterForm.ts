@@ -3,6 +3,7 @@ import { createUser, getUserById, updateUser } from "../api/users";
 import { errorHandler } from "../utils/errorHandler";
 import { AxiosError } from "axios";
 import Modal from "../sections/modal";
+import logInForm from "./logInForm";
 
 export function userRegisterForm(isUpdate?: boolean, updatingId?: string) {
   const form = document.createElement("form");
@@ -10,62 +11,66 @@ export function userRegisterForm(isUpdate?: boolean, updatingId?: string) {
   form.method = "post";
 
   const firstName = document.createElement("input");
+  firstName.style.flex = "1";
   firstName.type = "text";
   firstName.placeholder = "First Name";
   firstName.id = "firstName";
   firstName.name = "firstName";
-  firstName.value = "admin";
 
   const lastName = document.createElement("input");
+  lastName.style.flex = "1";
   lastName.type = "text";
   lastName.placeholder = "Last Name";
   lastName.id = "lastName";
   lastName.name = "lastName";
-  lastName.value = "admin";
 
   const email = document.createElement("input");
   email.type = "email";
   email.placeholder = "Example@example.com";
   email.id = "email";
   email.name = "email";
-  email.value = "admin@admin.com";
 
   const phone = document.createElement("input");
-  phone.type = "text";
+  phone.type = "number";
   phone.placeholder = "Phone";
   phone.id = "phone";
   phone.name = "phone";
-  phone.value = "admin";
 
   const address = document.createElement("input");
   address.type = "text";
   address.placeholder = "Address";
   address.id = "address";
   address.name = "address";
-  address.value = "admin";
 
   const password = document.createElement("input");
   password.type = "password";
   password.placeholder = "Password";
   password.id = "password";
   password.name = "password";
-  password.value = "admin";
 
   const confirmPassword = document.createElement("input");
   confirmPassword.type = "password";
   confirmPassword.placeholder = "Confirm Password";
   confirmPassword.id = "confirmPassword";
   confirmPassword.name = "confirmPassword";
-  confirmPassword.value = "admin";
 
   const registerBtn = document.createElement("button");
   registerBtn.type = "submit";
-  registerBtn.innerHTML = "Register";
-  registerBtn.classList.add("btn");
+  registerBtn.innerHTML = updatingId ? "Update" : "Register";
+  registerBtn.classList.add("submit-btn");
+
+  const loginBtn = document.createElement("button");
+  loginBtn.innerHTML = "Already have an account?";
+  loginBtn.classList.add("have-account-btn");
+  loginBtn.addEventListener("click", () => {
+    Modal.removeModal();
+    Modal.modal(logInForm(), "Login");
+  });
 
   const btns = document.createElement("div");
   btns.classList.add("btns");
   btns.append(registerBtn);
+  btns.append(loginBtn);
 
   if (isUpdate) {
     if (!updatingId) {
@@ -101,13 +106,24 @@ export function userRegisterForm(isUpdate?: boolean, updatingId?: string) {
     wrapWithLabel("Last Name:", lastName)
   );
 
+  const contact = document.createElement("div");
+  contact.classList.add("contact");
+  contact.append(
+    wrapWithLabel("Email:", email),
+    wrapWithLabel("Phone:", phone)
+  );
+
+  const passwords = document.createElement("div");
+  passwords.classList.add("contact");
+  passwords.append(
+    wrapWithLabel("Password:", password),
+    wrapWithLabel("Confirm Password:", confirmPassword)
+  );
   form.append(
     name,
-    wrapWithLabel("Email", email),
-    wrapWithLabel("Phone", phone),
-    wrapWithLabel("Address", address),
-    wrapWithLabel("Password", password),
-    wrapWithLabel("Confirm Password", confirmPassword),
+    contact,
+    passwords,
+    wrapWithLabel("Address:", address),
     btns
   );
   return form;

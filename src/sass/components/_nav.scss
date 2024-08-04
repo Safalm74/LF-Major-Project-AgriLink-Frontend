@@ -10,7 +10,7 @@
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1000;
+    z-index: 3;
 
 
     &__logo {
@@ -18,9 +18,10 @@
     }
 
     &__logo-wrapper {
+        position:absolute;
         display: flex;
         align-items: center;
-        width: 5rem;
+        width: 10rem;
         margin: 0 3rem;
     }
 
@@ -78,4 +79,15 @@
     border-radius: 50%;
     background-color: #fca311;
     padding: .5rem;
+}
+
+.search-bar{
+    width: 20rem;
+    height: 2.5rem;
+    padding: 0 1rem;
+    border-radius: .5rem;
+    border: none;
+    outline: none;
+    font-size: 1.2rem;
+    margin-right: 1rem;
 }

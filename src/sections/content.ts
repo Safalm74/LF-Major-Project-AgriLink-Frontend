@@ -1,4 +1,4 @@
-import { userManagement } from "../pages/UserManagement";
+import { userManagement } from "../pages/userManagement";
 import Router from "../routes";
 import { Header } from "./header";
 

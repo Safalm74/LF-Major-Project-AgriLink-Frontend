@@ -34,7 +34,7 @@ export class ProductManagement {
         <td>${product.category}</td>`;
 
       const deleteBtn = document.createElement("button");
-      deleteBtn.innerHTML = `<i class="fa-solid fa-trash"></i>`;
+      deleteBtn.innerHTML = `<i class="fa-solid fa-trash" style="color:#FF4C4C"></i>`;
       deleteBtn.addEventListener("click", async () => {
         await deleteProduct(product.id!);
 
@@ -50,7 +50,17 @@ export class ProductManagement {
   }
 
   static async load() {
-    const productManagement = await this.init();
+    const productManagement = document.createElement("div");
+    productManagement.classList.add("product-management");
+
+    const titleDiv = document.createElement("div");
+    titleDiv.classList.add("title");
+    titleDiv.innerHTML = `
+      <h2><span>Product</span> Management</h2>
+    `;
+
+    productManagement.appendChild(titleDiv);
+    productManagement.appendChild(await this.init());
     Content.replaceContent(productManagement);
   }
 }

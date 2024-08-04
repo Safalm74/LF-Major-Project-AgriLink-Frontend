@@ -96,7 +96,7 @@ export default class Cart {
     const cartTable = cart.getElementsByClassName("cart-table")[0];
 
     cartTable.innerHTML = this.tableHeadings([
-      " ",
+      "Actions",
       "Product Image",
       "Product",
       "Quantity",

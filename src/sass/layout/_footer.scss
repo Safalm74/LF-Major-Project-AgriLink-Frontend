@@ -8,13 +8,15 @@
     background-color: #07212e;
     color: white;
 
+
     &__about-and-contact{
         display: flex;
         flex-direction: row;
         align-items: space-between;
         justify-content: space-between;
         width: 50%;
-        flex-wrap: wrap;
+        flex-wrap: wrap;    
+        gap:3rem;
         div{
             flex:1;
             margin: 0 1rem ;

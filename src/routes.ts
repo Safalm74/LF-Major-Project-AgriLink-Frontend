@@ -4,9 +4,9 @@ import Cart from "./pages/cart";
 import { Account } from "./pages/account";
 import OrderManagement from "./pages/orderManagement";
 import { IRoute } from "./interface/route";
-import { userManagement } from "./pages/UserManagement";
+import { userManagement } from "./pages/userManagement";
 import { FarmManagement } from "./pages/farmManagement";
-import { ProductManagement } from "./pages/ProductManagement";
+import { ProductManagement } from "./pages/productManagement";
 
 const routes: IRoute[] = [
   {

@@ -58,24 +58,26 @@ export default function logInForm() {
   email.placeholder = "Example@example.com";
   email.id = "email";
   email.name = "email";
-  email.value = "farmer@farmer.com";
+  email.required = true;
 
   const password = document.createElement("input");
   password.type = "password";
   password.placeholder = "Password";
   password.id = "password";
   password.name = "password";
-  password.value = "farmer";
+  password.required = true;
 
   const logInBtn = document.createElement("button");
   logInBtn.type = "submit";
   logInBtn.innerHTML = "Log In";
   logInBtn.classList.add("btn");
+  logInBtn.classList.add("logIn-btn");
 
   const createNewAccountBtn = document.createElement("button");
   createNewAccountBtn.type = "button";
   createNewAccountBtn.innerHTML = "Create New Account";
   createNewAccountBtn.classList.add("btn");
+  createNewAccountBtn.classList.add("create-account-btn");
   createNewAccountBtn.addEventListener("click", () => {
     document.body.appendChild(
       Modal.modal(userRegisterForm()!, "Create New Account")

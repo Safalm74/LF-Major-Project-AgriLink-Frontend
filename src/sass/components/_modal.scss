@@ -3,25 +3,21 @@
     justify-content: center;
     align-items: center;
     position: fixed;
-    z-index: 1;
+    z-index: 10;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
-
-    &--active{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
+    
     &__container{
         display: flex;
         flex-direction: column;
         align-items: center;
         background-color: $day-header-background-color;
+        border: 1px solid #888;
+        justify-content: space-around;
         color: white;
         margin: 15% auto;
         height: auto;
@@ -49,6 +45,7 @@
         justify-content: space-between;
         width: 100%;
         padding: 1% 5%;
+        margin-top: 4rem;
     }
 
 }

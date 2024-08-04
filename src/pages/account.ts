@@ -45,7 +45,8 @@ export class Account {
           userRegisterForm(
             true,
             JSON.parse(localStorage.getItem("userDetails")!).id
-          )!
+          )!,
+          "Edit Profile"
         );
       });
     }
@@ -197,12 +198,12 @@ export class Account {
       const tr = document.createElement("tr");
       const farmName = document.createElement("td");
       const farmAddress = document.createElement("td");
-      const actionWrapper = document.createElement("td");
+      const actionWrapper = document.createElement("div");
       const editBtn = document.createElement("button");
       const deleteBtn = document.createElement("button");
 
-      editBtn.innerHTML = `<i class="fa-solid fa-pen-to-square edit"></i>`;
-      deleteBtn.innerHTML = `<i class="fa-solid fa-trash delete"></i>`;
+      editBtn.innerHTML = `<i class="fa-solid fa-pen-to-square edit" style="color:#4C9EFF"></i>`;
+      deleteBtn.innerHTML = `<i class="fa-solid fa-trash delete" style="color:#FF4C4C"></i>`;
 
       editBtn.addEventListener("click", async () => {
         await AddFarmForm.load("Edit Farm", farm.id);

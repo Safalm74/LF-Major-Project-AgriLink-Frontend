@@ -1,8 +1,15 @@
 import { AxiosError } from "axios";
 import { errorHandler } from "../utils/errorHandler";
-import { createFarm, getAllFarmsByUserId, updateFarm } from "../api/farm";
+import {
+  createFarm,
+  getAllFarmsByUserId,
+  getFarmDetailsById,
+  updateFarm,
+} from "../api/farm";
 import Modal from "../sections/modal";
 import fetchHtml from "../utils/fetchHtml";
+import Toast from "./toast";
+import { Account } from "../pages/account";
 
 export class AddFarmForm {
   static async init() {
@@ -17,6 +24,20 @@ export class AddFarmForm {
   static async load(btnName: string, farmId?: string) {
     const addFarmForm = await this.init();
     Modal.modal(addFarmForm);
+
+    if (farmId) {
+      console.log(farmId);
+      const farmData = await getFarmDetailsById(farmId);
+      const farmName = addFarmForm.getElementsByClassName(
+        "farm-name"
+      )[0] as HTMLInputElement;
+      const farmAddress = addFarmForm.getElementsByClassName(
+        "farm-address"
+      )[0] as HTMLInputElement;
+
+      farmName.value = farmData.farmName;
+      farmAddress.value = farmData.farmAddress!;
+    }
 
     this.loadEventListener(addFarmForm, btnName, farmId);
   }
@@ -48,6 +69,14 @@ export class AddFarmForm {
                   farmName: farmNameValue,
                   farmAddress: farmAddressValue,
                 });
+
+                localStorage.removeItem("farm");
+                localStorage.setItem(
+                  "farm",
+                  JSON.stringify(await getAllFarmsByUserId())
+                );
+
+                Toast("Farm updated successfully", "success");
               } else {
                 await createFarm({
                   farmName: farmNameValue,
@@ -59,9 +88,11 @@ export class AddFarmForm {
                   "farm",
                   JSON.stringify(await getAllFarmsByUserId())
                 );
-
-                Modal.removeModal();
+                Toast("Farm created successfully", "success");
               }
+
+              Modal.removeModal();
+              Account.load();
             } catch (error) {
               errorHandler((error as AxiosError).response!);
             }

@@ -30,6 +30,10 @@ export default class OrderManagement {
     const selectFarmDiv = document.getElementsByClassName(
       "order-management__farm"
     )[0];
+    const farmNameSpan = document.createElement("span");
+    farmNameSpan.innerHTML = "Select Farm";
+    farmNameSpan.style.fontWeight = "bold";
+    selectFarmDiv.appendChild(farmNameSpan);
     const selectFarm = document.createElement("select");
     const farmDetails = localStorage.getItem("farm");
 

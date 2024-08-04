@@ -64,26 +64,57 @@ h1 {
     color: #333;
   }
   .delivered {
-    background-color: #4682b4; 
-    color: white;
+    background-color: #dff7df; 
+    color: black;
     font-family: Arial, sans-serif;
+    text-transform: capitalize;
   }
   
   .canceled {
-    background-color: red;
-    color: white;
+    background-color: #ffcccc;
+    color: black;
     font-family: Arial, sans-serif;
+    text-transform: capitalize;
   }
   
   .pending {
-    background-color: #ff6347; 
-    color: white;
+    background-color: #FFE4B5; 
+    color: black;
     font-family: Arial, sans-serif;
+    text-transform: capitalize;
   }
   
   .to-deliver {
-    background-color: #2e8b57; 
-    color: white;
+    background-color:  #E0FFFF;
+    color: black;
     font-family: Arial, sans-serif;
+    text-transform: capitalize;
+  }
+
+  .order-management__name{
+    text-align: center;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom:3.5rem;    
+        font-size: 2rem;
+        span{
+            color:#fca311;
+        }
   }
   
+.select-farm{
+  margin-left: 1rem;
+  padding: .5rem;
+  border-radius: 4px;
+  box-shadow: 0 #333 #333 ;
+  background-color: #f8f8f8;
+  color: #333;
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 20px;
+}
+.order-management__farm{
+  margin-bottom: 3rem;
+}
