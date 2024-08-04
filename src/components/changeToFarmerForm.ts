@@ -44,6 +44,8 @@ export class ChangeToFarmerForm {
             });
 
             Toast("Log in again to see changes", "success");
+
+            Modal.removeModal();
           }
         }
       });
