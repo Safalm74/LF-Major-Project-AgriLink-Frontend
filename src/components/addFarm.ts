@@ -23,7 +23,7 @@ export class AddFarmForm {
 
   static async load(btnName: string, farmId?: string) {
     const addFarmForm = await this.init();
-    Modal.modal(addFarmForm);
+    Modal.modal(addFarmForm, farmId ? "Update Farm" : "Add Farm");
 
     if (farmId) {
       const farmData = await getFarmDetailsById(farmId);

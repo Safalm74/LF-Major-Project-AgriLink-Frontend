@@ -13,13 +13,14 @@ export class ConfirmDeletePopUp {
     deleteConfirmationPopUp.innerHTML = warningMsg;
     yesBtn.innerHTML = "Yes";
     noBtn.innerHTML = "No";
-    yesBtn.classList.add("btn");
-    noBtn.classList.add("btn");
+    yesBtn.classList.add("red-btn");
+    noBtn.classList.add("green-btn");
 
+    deleteConfirmationPopUp.appendChild(document.createElement("br"));
     deleteConfirmationPopUp.appendChild(yesBtn);
     deleteConfirmationPopUp.appendChild(noBtn);
 
-    Modal.modal(deleteConfirmationPopUp);
+    Modal.modal(deleteConfirmationPopUp, "Delete Confirmation");
 
     yesBtn.addEventListener("click", async () => {
       await callback(deletingId);

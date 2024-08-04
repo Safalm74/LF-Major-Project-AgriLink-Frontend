@@ -18,7 +18,7 @@ export class UpdateProductForm {
 
   static async load(productId: string) {
     const updateProductForm = await UpdateProductForm.init();
-    Modal.modal(updateProductForm);
+    Modal.modal(updateProductForm, "Update Product");
 
     this.loadEventListener(updateProductForm, productId);
     this.loadProductDetails(updateProductForm, productId);

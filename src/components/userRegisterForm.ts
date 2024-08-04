@@ -8,6 +8,7 @@ import logInForm from "./logInForm";
 export function userRegisterForm(isUpdate?: boolean, updatingId?: string) {
   const form = document.createElement("form");
   form.classList.add("form");
+  form.classList.add("register-form");
   form.method = "post";
 
   const firstName = document.createElement("input");

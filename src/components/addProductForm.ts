@@ -39,7 +39,7 @@ export default class AddProductForm {
 
     const image = productImage.files![0];
 
-    if (!image) {
+    if (!image || !image.type.startsWith("image/")) {
       toast("Please select an image", "error");
       return;
     }

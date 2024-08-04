@@ -1,5 +1,6 @@
 .modal{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     position: fixed;
@@ -9,43 +10,49 @@
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
     
     &__container{
         display: flex;
         flex-direction: column;
         align-items: center;
-        background-color: $day-header-background-color;
-        border: 1px solid #888;
-        justify-content: space-around;
-        color: white;
-        margin: 15% auto;
-        height: auto;
-        width: auto;
+        background: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        color: #333;
+        padding: 20px;
+        max-width: 600px;
+        width: 90%;
+        margin: auto;
+        max-height: 90%;
+        overflow-y: auto;
 
     }
     
     &__content{
-        background-color: var(--btn-background-color);
-        margin: 15% auto;
+        background-color: #f9f9f9;
+        border-radius: 4px;
         padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
-        height: 80%;
+        width: 100%;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
     }
 
-    &__message{
+    &__message {
         text-align: center;
+        font-size: 1.2em;
+        margin-bottom: 20px;
     }
 
-    &__msg-wrapper{
+    &__msg-wrapper {
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
+        background-color: #f1f1f1;
+        border-top: 1px solid #ddd;
+        padding: 10px;
         width: 100%;
-        padding: 1% 5%;
-        margin-top: 4rem;
     }
 
 }
