@@ -5,6 +5,7 @@ import { AxiosError } from "axios";
 import Modal from "../sections/modal";
 import logInForm from "./logInForm";
 import Toast from "./toast";
+import { Account } from "../pages/account";
 
 export function userRegisterForm(isUpdate?: boolean, updatingId?: string) {
   const form = document.createElement("form");
@@ -198,10 +199,32 @@ async function handleFormSubmitUpdateUser(event: Event, userId: string) {
   }
 
   try {
-    updateUser(userId, lastName, firstName, email, password, phone, address);
+    await updateUser(
+      userId,
+      lastName,
+      firstName,
+      email,
+      password,
+      phone,
+      address
+    );
 
     Toast("User updated successfully", "success");
+
+    const userDetails = {
+      address: address,
+      email: email,
+      name: firstName + " " + lastName,
+      id: userId,
+      phone: phone,
+      role: JSON.parse(localStorage.getItem("userDetails")!).role,
+    };
+
+    localStorage.removeItem("userDetails");
+    localStorage.setItem("userDetails", JSON.stringify(userDetails));
+
     Modal.removeModal();
+    Account.load();
   } catch (error) {
     errorHandler((error as AxiosError).response!);
   }
