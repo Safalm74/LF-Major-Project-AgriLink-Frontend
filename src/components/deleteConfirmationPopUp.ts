@@ -11,8 +11,8 @@ export class ConfirmDeletePopUp {
     const noBtn = document.createElement("button");
     deleteConfirmationPopUp.classList.add("delete-confirmation-pop-up");
     deleteConfirmationPopUp.innerHTML = warningMsg;
-    yesBtn.innerHTML = "Yes";
-    noBtn.innerHTML = "No";
+    yesBtn.innerHTML = `<i class="fa-solid fa-check"></i>`;
+    noBtn.innerHTML = `<i class="fa-solid fa-xmark"></i>`;
     yesBtn.classList.add("red-btn");
     noBtn.classList.add("green-btn");
 
