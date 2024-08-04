@@ -11,6 +11,7 @@ import { AddFarmForm } from "../components/addFarm";
 import { IFarm } from "../interface/farm";
 import { deleteFarm, getAllFarmsByUserId } from "../api/farm";
 import Toast from "../components/toast";
+import { ConfirmDeletePopUp } from "../components/deleteConfirmationPopUp";
 
 export class Account {
   static async init() {
@@ -217,16 +218,21 @@ export class Account {
       });
 
       deleteBtn.addEventListener("click", async () => {
-        await deleteFarm(farm.id!);
+        ConfirmDeletePopUp.confirm(
+          "Are you sure you want to delete this farm?",
+          async () => {
+            await deleteFarm(farm.id!);
+            Toast("Farm deleted successfully", "success");
 
-        Toast("Farm deleted successfully", "success");
+            table.removeChild(tr);
 
-        table.removeChild(tr);
-
-        localStorage.removeItem("farm");
-        localStorage.setItem(
-          "farm",
-          JSON.stringify(await getAllFarmsByUserId())
+            localStorage.removeItem("farm");
+            localStorage.setItem(
+              "farm",
+              JSON.stringify(await getAllFarmsByUserId())
+            );
+          },
+          farm.id!
         );
       });
 

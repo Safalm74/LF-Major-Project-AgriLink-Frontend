@@ -1,4 +1,5 @@
 import { deleteFarm, getAllFarms } from "../api/farm";
+import { ConfirmDeletePopUp } from "../components/deleteConfirmationPopUp";
 import Toast from "../components/toast";
 import { IFarm } from "../interface/farm";
 import Router from "../routes";
@@ -28,10 +29,15 @@ export class FarmManagement {
       const deleteBtn = document.createElement("button");
       deleteBtn.innerHTML = `<i class="fa-solid fa-trash " style="color:#FF4C4C"></i>`;
       deleteBtn.addEventListener("click", async () => {
-        await deleteFarm(farm.id!);
-
-        Toast("Farm deleted successfully", "success");
-        Router.resolve("/farm-management");
+        ConfirmDeletePopUp.confirm(
+          "Are you sure you want to delete this farm?",
+          async (id) => {
+            await deleteFarm(id);
+            Toast("Farm deleted successfully", "success");
+            Router.resolve("/farm-management");
+          },
+          farm.id!
+        );
       });
 
       tableRow.appendChild(deleteBtn);

@@ -1,4 +1,5 @@
 import { deleteProduct, getAllProducts } from "../api/products";
+import { ConfirmDeletePopUp } from "../components/deleteConfirmationPopUp";
 import Toast from "../components/toast";
 import { IProduct } from "../interface/product";
 import Router from "../routes";
@@ -36,10 +37,15 @@ export class ProductManagement {
       const deleteBtn = document.createElement("button");
       deleteBtn.innerHTML = `<i class="fa-solid fa-trash" style="color:#FF4C4C"></i>`;
       deleteBtn.addEventListener("click", async () => {
-        await deleteProduct(product.id!);
-
-        Toast("Product deleted successfully", "success");
-        Router.resolve("/product-management");
+        ConfirmDeletePopUp.confirm(
+          "Are you sure you want to delete this product?",
+          async (id) => {
+            await deleteProduct(id);
+            Toast("Product deleted successfully", "success");
+            Router.resolve("/product-management");
+          },
+          product.id
+        );
       });
 
       tableRow.appendChild(deleteBtn);

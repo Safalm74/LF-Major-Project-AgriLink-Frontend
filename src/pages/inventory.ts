@@ -7,6 +7,7 @@ import AddProductForm from "../components/addProductForm";
 import toast from "../components/toast";
 import { IFarm } from "../interface/farm";
 import { UpdateProductForm } from "../components/updateProductForm";
+import { ConfirmDeletePopUp } from "../components/deleteConfirmationPopUp";
 
 export default class Inventory {
   static async init() {
@@ -97,8 +98,16 @@ export default class Inventory {
 
       const deleteBtn = tableRow.getElementsByClassName("delete")[0];
       deleteBtn.addEventListener("click", () => {
-        deleteProduct(product.id);
-        inventory.removeChild(tableRow);
+        ConfirmDeletePopUp.confirm(
+          "Are you sure you want to delete this product?",
+          async (id) => {
+            await deleteProduct(id);
+            inventory.removeChild(tableRow);
+
+            toast("Product deleted successfully", "success");
+          },
+          product.id
+        );
       });
 
       inventory.appendChild(tableRow);

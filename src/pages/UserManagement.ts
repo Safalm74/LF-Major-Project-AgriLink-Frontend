@@ -1,4 +1,5 @@
 import { deleteUser, getAllUser } from "../api/users";
+import { ConfirmDeletePopUp } from "../components/deleteConfirmationPopUp";
 import Toast from "../components/toast";
 import { ICustomer } from "../interface/user";
 import Router from "../routes";
@@ -30,10 +31,15 @@ export class userManagement {
 
       deleteBtn.innerHTML = `<i class="fa-solid fa-trash " style="color:#FF4C4C"></i>`;
       deleteBtn.addEventListener("click", async () => {
-        await deleteUser(user.id!);
-
-        Toast("User deleted successfully", "success");
-        Router.resolve("/user-management");
+        ConfirmDeletePopUp.confirm(
+          "Are you sure you want to delete this user?",
+          async (id) => {
+            await deleteUser(id);
+            Toast("User deleted successfully", "success");
+            Router.resolve("/user-management");
+          },
+          user.id!
+        );
       });
 
       tableRow.appendChild(deleteBtn);
