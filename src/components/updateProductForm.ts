@@ -58,16 +58,7 @@ export class UpdateProductForm {
       async (e) => {
         e.preventDefault();
 
-        this.handleUpdateSubmit(
-          ProductForm.getElementsByTagName("form")[0],
-          productId
-        );
-
-        Modal.removeModal();
-
-        toast("Product added successfully", "success");
-
-        await Inventory.load();
+        this.handleUpdateSubmit(ProductForm as HTMLFormElement, productId);
       }
     );
   }
@@ -84,12 +75,12 @@ export class UpdateProductForm {
     const description = formData.get("description") as string;
     const category = formData.get("category") as string;
 
-    if (!productImage) {
+    const image = productImage.files![0];
+
+    if (!image) {
       toast("Please select an image", "error");
       return;
     }
-
-    const image = productImage.files![0];
 
     try {
       const fileName = await uploadImage(image);
@@ -105,10 +96,16 @@ export class UpdateProductForm {
           imageUrl: fileName,
         };
 
-        updateProduct(productId, productToUpload);
+        await updateProduct(productId, productToUpload);
+
+        Modal.removeModal();
+
+        toast("Product updated successfully", "success");
+
+        await Inventory.load();
       }
     } catch (error) {
-      toast("Something went wrong", "error");
+      toast("Something went wrong: ", "error");
     }
   }
 }
