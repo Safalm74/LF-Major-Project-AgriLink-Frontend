@@ -4,6 +4,7 @@ import { errorHandler } from "../utils/errorHandler";
 import { AxiosError } from "axios";
 import Modal from "../sections/modal";
 import logInForm from "./logInForm";
+import Toast from "./toast";
 
 export function userRegisterForm(isUpdate?: boolean, updatingId?: string) {
   const form = document.createElement("form");
@@ -171,6 +172,8 @@ async function handleFormSubmitAddUser(event: Event) {
 
   try {
     await createUser(firstName, lastName, email, password, phone, address);
+
+    Toast("User created successfully", "success");
     Modal.removeModal();
   } catch (error) {
     errorHandler((error as AxiosError).response!);
