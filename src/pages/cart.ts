@@ -86,8 +86,6 @@ export default class Cart {
 
     checkoutBtn.addEventListener("click", async () => {
       await this.checkout();
-
-      Account.load();
     });
   }
 
@@ -241,10 +239,16 @@ export default class Cart {
         allCartDataToCheckout.push(dataToCheckout);
       });
 
-      allCartDataToCheckout.forEach(async (data) => {
-        await createOrder(data);
-        this.cartItems = [];
-      });
+      await Promise.all(
+        allCartDataToCheckout.map(async (data) => {
+          return await createOrder(data);
+        })
+      );
+
+      this.cartItems = [];
+
+      Toast("Order placed successfully", "success");
+      Account.load();
     });
   }
 
