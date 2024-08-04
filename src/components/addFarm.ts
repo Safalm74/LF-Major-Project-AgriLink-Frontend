@@ -26,7 +26,6 @@ export class AddFarmForm {
     Modal.modal(addFarmForm);
 
     if (farmId) {
-      console.log(farmId);
       const farmData = await getFarmDetailsById(farmId);
       const farmName = addFarmForm.getElementsByClassName(
         "farm-name"
