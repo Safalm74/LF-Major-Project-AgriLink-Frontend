@@ -1,6 +1,7 @@
 import { changeToFarmer } from "../api/users";
 import Modal from "../sections/modal";
 import fetchHtml from "../utils/fetchHtml";
+import Toast from "./toast";
 
 export class ChangeToFarmerForm {
   static async init() {
@@ -41,6 +42,8 @@ export class ChangeToFarmerForm {
               farmName: farmNameValue,
               farmAddress: farmAddressValue,
             });
+
+            Toast("Log in again to see changes", "success");
           }
         }
       });
