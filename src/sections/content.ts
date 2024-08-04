@@ -1,4 +1,4 @@
-import { userManagement } from "../pages/userManagement";
+import { UserManagement } from "../pages/userManagement";
 import Router from "../routes";
 import { Header } from "./header";
 
@@ -17,7 +17,7 @@ export class Content {
     }
 
     if (userDetails.role === "admin") {
-      content.appendChild(await userManagement.init());
+      content.appendChild(await UserManagement.init());
     } else {
       Router.resolve("/home");
     }

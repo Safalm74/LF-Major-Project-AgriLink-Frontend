@@ -5,7 +5,7 @@ import { ICustomer } from "../interface/user";
 import Router from "../routes";
 import { Content } from "../sections/content";
 
-export class userManagement {
+export class UserManagement {
   static async init() {
     const table = document.createElement("table");
     const tableRow = document.createElement("tr");

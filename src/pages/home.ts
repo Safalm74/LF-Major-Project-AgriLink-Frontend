@@ -102,6 +102,7 @@ export default class Home {
       productName.innerHTML = cardInstant.productName;
       productCategory.innerHTML = cardInstant.category;
       productPrice.innerHTML = `Rs. ${cardInstant.price} per ${cardInstant.quantityUnit}`;
+
       if (cardInstant.quantity < 1) {
         const outOfStock = document.createElement("img");
         outOfStock.src = "../../public/images/outOfStock.png";
@@ -116,6 +117,7 @@ export default class Home {
       card.addEventListener("click", () => {
         ProductDetails.load(cardInstant.id);
       });
+
       products.appendChild(card);
     });
   }
