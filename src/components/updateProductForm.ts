@@ -8,8 +8,9 @@ import { uploadImage } from "../api/minio";
 
 export class UpdateProductForm {
   static async init() {
-    const updateProductForm = document.createElement("div");
+    const updateProductForm = document.createElement("form");
     updateProductForm.classList.add("update-product-form");
+    updateProductForm.classList.add("form");
     updateProductForm.innerHTML = await fetchHtml(
       "components/updateProductForm"
     );
@@ -20,8 +21,8 @@ export class UpdateProductForm {
     const updateProductForm = await UpdateProductForm.init();
     Modal.modal(updateProductForm, "Update Product");
 
-    this.loadEventListener(updateProductForm, productId);
-    this.loadProductDetails(updateProductForm, productId);
+    await this.loadEventListener(updateProductForm, productId);
+    await this.loadProductDetails(updateProductForm, productId);
   }
 
   static async loadProductDetails(form: HTMLElement, productId: string) {

@@ -1,34 +1,33 @@
-<form method="post" class="form">
+
     <div>
         <label for="product-image">Product Image: </label><br>
         <input type="file" id="product-image" class="product-image" accept="image/*" required>
     </div>
     <div>
         <label for="product-name" value="test">Product Name: </label><br>
-        <input type="text" name="product-name" id="product-name" placeholder="Product Name" required>
+        <input type="text" name="product-name" id="product-name" placeholder="Product Name" required class="product-name-input">
     </div>
     <div>
         <label for="price">Price: </label><br>
-        <input type="number" name="price" id="price" placeholder="Price" required>
+        <input type="number" name="price" id="price" placeholder="Price" required class="price-input">
     </div>
 
     <div>
         <label for="quantity">Quantity: </label><br>
-        <input type="text" name="quantity" id="quantity" placeholder="Quantity" required>
+        <input type="text" name="quantity" id="quantity" placeholder="Quantity" required class="quantity-input">
     </div>
     <div>
         <label for="quantity-unit">Quantity Unit: </label><br>
         <input type="text" name="quantity-unit" id="quantity-unit" placeholder="Quantity Unit (Kg, Litre, ...)"
-            required>
+            required class="quantity-unit-input">
     </div>
     <div>
         <label for="description">Description: </label><br>
-        <input type="text" name="description" id="description" placeholder="Description" required>
+        <input type="text" name="description" id="description" placeholder="Description" required class="description-input">
     </div>
     <div>
         <label for="category">Category: </label><br>
-        <input type="text" name="category" id="category" placeholder="Category" required>
+        <input type="text" name="category" id="category" placeholder="Category" required class="category-input">
     </div>
 
     <input type="submit" class="submit-btn green-btn" value="Update Product">
-</form>
